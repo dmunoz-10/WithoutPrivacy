@@ -1,0 +1,39 @@
+<% content_for :title, 'Log in' %>
+
+<div class="row text-center">
+  <div class="col-md-6 offset-md-3 mt-5">
+    <h2>Log in</h2>
+
+    <div class="form mt-4">
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-group">
+          <%= f.input :email,
+                      autofocus: true,
+                      wrapper: false,
+                      label: false,
+                      input_html: {class: 'form-control', autocomplete: 'email'},
+                      placeholder: 'Email' %>
+        </div>
+        <div class="form-group">
+          <%= f.input :password,
+                      wrapper: false,
+                      label: false,
+                      input_html: {class: 'form-control'},
+                      placeholder: 'Password' %>
+        </div>
+        <div class="form-group">
+          <%= f.input :remember_me,
+                      wrapper: false,
+                      as: :boolean if devise_mapping.rememberable? %>
+        </div>
+        <div class="form-group">
+          <%= f.button :submit, 'Log in', class: 'btn btn-outline-primary' %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
