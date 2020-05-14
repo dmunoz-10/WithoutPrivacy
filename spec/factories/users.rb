@@ -5,6 +5,7 @@ FactoryBot.define do
     first_name { FFaker::Name.first_name }
     last_name { FFaker::Name.last_name }
     username { FFaker::Internet.user_name }
+    description { FFaker::Lorem.paragraph }
     gender { User.genders.keys.sample }
     birth_date { FFaker::Time.date }
     email { FFaker::Internet.safe_email }

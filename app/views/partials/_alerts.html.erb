@@ -7,9 +7,16 @@
   </div>
 <% end %>
 
-<% if alert %>
+<% if alert || flash[:errors] %>
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <%= alert %>
+    <ul>
+      <% errors.each do |error| %>
+        <li>
+          <%= error %>
+        </li>
+      <% end %>
+    </ul>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>

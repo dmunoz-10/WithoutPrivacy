@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   get ':id', to: 'users#show', as: 'user'
   get 'explorer/posts', to: 'pages#explorer', as: 'explorer'
-  resources :posts, except: :index
+  resources :posts, except: %i[index show]
 end

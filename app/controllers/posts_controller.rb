@@ -17,7 +17,7 @@ class PostsController < ApplicationController
       redirect_to user_url(@post.user), notice: 'Post created successfully!'
     else
       flash.now[:errors] = @post.errors.full_messages
-      render :new, alert: 'Error'
+      render :new
     end
   end
 
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
       redirect_to user_url(@post.user), notice: 'Post updated successfully!'
     else
       flash.now[:errors] = @post.errors.full_messages
-      render :edit, alert: 'Error'
+      render :edit
     end
   end
 
@@ -38,8 +38,7 @@ class PostsController < ApplicationController
     if @post.destroy
       redirect_to user_url(@post.user), notice: 'Post deleted successfully!'
     else
-      flash.now[:errors] = @post.errors.full_messages
-      redirect_to :back, alert: 'Error'
+      redirect_to :back, alert: 'There was an error!'
     end
   end
 
