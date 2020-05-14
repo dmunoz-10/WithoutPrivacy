@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'activeadmin'
 gem 'arctic_admin'
 gem 'devise'
+gem 'friendly_id', '~> 5.3'
 gem 'health-monitor-rails'
 gem 'simple_form'
 

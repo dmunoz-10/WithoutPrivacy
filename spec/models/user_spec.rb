@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Username validation' do
-    it 'must exis' do
+    it 'must exist' do
       user = build(:user, username: nil)
       user.save
       expect(user.errors[:username]).to include("can't be blank")
@@ -31,6 +31,18 @@ RSpec.describe User, type: :model do
       user = build(:user, username: 'hola_mundo')
       user.save
       expect(user.errors[:username]).to include('has already been taken')
+    end
+
+    it 'must be valid' do
+      INVALID_USERNAMES = %w[
+        invalid-username invalid_username. .invalid_username
+        invalid(username invalid)username invalid/username
+        invalid\username invalid<username invalid>username
+      ].freeze
+
+      user = build(:user, username: INVALID_USERNAMES.sample)
+      user.save
+      expect(user.errors[:username]).to include('is invalid')
     end
   end
 

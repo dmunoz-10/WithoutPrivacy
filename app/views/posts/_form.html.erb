@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-10 offset-md-1 mt-5">
+    <h2 class="text-center mb-3"><%= name %> Post</h2>
+
+    <%= form_with model: @post, local: true do |f| %>
+      <div class="form-inputs">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <%= f.label :image, style: 'display: block' %>
+              <%= f.file_field :image, class: 'form-control-file' %>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="d-flex justify-content-end">
+              <div class="custom-control custom-switch">
+                <%= f.check_box :private, class: 'custom-control-input' %>
+                <%= f.label :private, class: 'custom-control-label' %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-3">
+          <%= f.label :description  %>
+          <%= f.text_area :description,
+                          class: 'form-control',
+                          style: 'height: 200px; resize: none',
+                          autofocus: true,
+                          maxlength: 2200 %>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <%= f.submit "#{name == 'New' ? 'Create' : 'Update'}", class: 'btn btn-primary mb-2' %>
+      </div>
+    <% end %>
+
+    <div class="text-center">
+      <div class="col mb-3">
+        <%= link_to "Back", :back %>
+      </div>
+
+      <% if @post.persisted? %>
+        <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: "Are you sure?" },
+                    class: 'btn btn-outline-danger' %>
+      <% end %>
+    </div>
+  </div>
+</div>

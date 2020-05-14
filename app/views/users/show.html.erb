@@ -1,0 +1,56 @@
+<% content_for :title, @user.username %>
+
+<div class="row">
+  <div class="col-12 col-lg-4 mb-5">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex align-items-center">
+          <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle' %>
+          <div>
+            <%= "#{@user.first_name} #{@user.last_name}" %><br>
+            <%= "@#{@user.username}" %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p><%= @user.description %></p>
+
+        <div class="row">
+          <div class="col-12">
+            <% if @user.gender_male? %>
+              <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
+            <% elsif @user.gender_female? %>
+              <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
+            <% elsif @user.gender_other? %>
+              <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
+            <% end %>
+          </div>
+          <div class="col-12">
+            <i class="fas fa-birthday-cake"></i> <%= l @user.birth_date, format: :long %>
+          </div>
+          <div class="col-12">
+            <i class="fas fa-envelope"></i> <%= @user.email %>
+          </div>
+        </div>
+
+        <% if @user != current_user %>
+          <%= link_to 'Follow', '#', class: 'btn btn-outline-primary mt-3' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-8">
+    <% if @user == current_user %>
+      <div class="text-center mb-4">
+        <%= link_to '+', new_post_path, class: 'btn btn-primary border rounded-circle',
+                    title: 'Create a new post' %>
+      </div>
+    <% end %>
+    <% if @user.posts.count > 0 %>
+      <%= render partial: @user.posts.order('created_at DESC') %>
+    <% else %>
+      <h2 class="text-center">No posts</h2>
+    <% end %>
+  </div>
+</div>

@@ -1,24 +1,21 @@
 <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="opacity: 0.97">
   <div class="container">
-    <!-- Brand -->
     <%= link_to "WithoutPrivacy", root_path, class: "navbar-brand" %>
 
-    <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <%= link_to 'Home', root_path, class:"nav-link" %>
+          <%= link_to 'Explorer', explorer_path, class:"nav-link" %>
         </li>
         <% if user_signed_in? %>
-          <!--li class="nav-item">
-            <%# link_to 'My purchases', purchases_path, class:'nav-link' %>
-          </li-->
-          <!-- User Dropdown -->
+          <li class="nav-item">
+            <%= link_to 'My Profile', user_path(current_user), class:'nav-link' %>
+          </li>
+
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">
               <%= current_user.username %>

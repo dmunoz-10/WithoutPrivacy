@@ -1,0 +1,15 @@
+<% content_for :title, 'Explorer' %>
+
+<div class="row">
+  <div class="col-12 col-lg-8 mb-4">
+    <% if @posts.size > 0 %>
+      <%= render partial: @posts %>
+    <% else %>
+      <h2 class="text-center">No posts</h2>
+    <% end %>
+  </div>
+
+  <div class="col-12 col-lg-4">
+
+  </div>
+</div>

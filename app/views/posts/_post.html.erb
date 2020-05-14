@@ -1,0 +1,55 @@
+<% if !post.private? || (post.private? && post.user == current_user) %>
+  <% if post.image.attached? %>
+    <div class="card bg-dark text-dark my-3">
+      <%= image_tag post.image, class: 'card-img' %>
+      <div class="card-img-overlay d-none">
+        <div class="d-flex justify-content-between">
+          <%= link_to user_path(post.user), class: 'btn' do %>
+            <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %> <%= post.user.username %>
+          <% end %>
+
+          <% if post.private? %>
+            <div>
+              <span class="badge badge-secondary">Private</span>
+            </div>
+          <% end %>
+        </div>
+        <% if post.description.present? %>
+          <p class="card-text"><%= post.description.truncate 40 %></p>
+        <% end %>
+        <p class="card-text"><%= time_ago_in_words(post.created_at).capitalize %></p>
+        <% if post.user == current_user %>
+          <div>
+            <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
+            <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="card bg-light my-3">
+      <div class="card-header d-flex justify-content-between">
+        <%= link_to user_path(post.user), class: 'btn' do %>
+          <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %> <%= post.user.username %>
+        <% end %>
+        <% if post.private? %>
+          <div>
+            <span class="badge badge-secondary">Private</span>
+          </div>
+        <% end %>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><%= post.description %></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="card-text text-muted"><%= time_ago_in_words(post.created_at).capitalize %></p>
+          <% if post.user == current_user %>
+            <div>
+              <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
+              <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -2,7 +2,11 @@
 
 # Pages Controller
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: :home
+  before_action :authenticate_user!, except: %i[home explorer]
 
   def home; end
+
+  def explorer
+    @posts = Post.all.includes(:user).where.not('private', true).order('created_at DESC')
+  end
 end

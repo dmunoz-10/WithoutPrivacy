@@ -20,7 +20,7 @@ class Post < ApplicationRecord
   end
 
   def presence_image_or_description
-    unless image.attached? && description.present?
+    if !image.attached? && description.blank?
       errors.add(:base, 'Either image or description is required')
     end
   end
