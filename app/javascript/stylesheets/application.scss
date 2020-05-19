@@ -1,1 +1,7 @@
-@import './bootstrap_custom.scss';
+@import '~bootstrap/scss/bootstrap';
+
+.username {
+  &:hover {
+    text-decoration: underline;
+  }
+}

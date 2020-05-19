@@ -1,0 +1,43 @@
+<% if @post.description.present? %>
+  <% content_for :title, "#{@post.user.username} on post: #{@post.description.truncate(26)}" %>
+<% else %>
+  <% content_for :title, "#{@post.user.username} post" %>
+<% end %>
+
+<% if @post.image.attached? %>
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-8">
+        <%= image_tag @post.image, class: 'card-img' %>
+      </div>
+      <div class="col-md-4">
+        <div class="card-body">
+          <%= link_to user_path(@post.user), class: 'btn' do %>
+            <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+            <span class="username"><%= @post.user.username %></span>
+          <% end %>
+
+          <% if @post.description.present? %>
+            <p class="card-text"><%= @post.description %></p>
+          <% end %>
+          <p class="card-text">
+            <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="card w-100">
+    <div class="card-body">
+      <%= link_to user_path(@post.user), class: 'btn' do %>
+        <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+        <span class="username"><%= @post.user.username %></span>
+      <% end %>
+      <p class="card-text"><%= @post.description %></p>
+      <p class="card-text">
+        <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
+      </p>
+    </div>
+  </div>
+<% end %>

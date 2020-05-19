@@ -4,10 +4,10 @@
   <div class="col-12 col-lg-4 mb-5">
     <div class="card">
       <div class="card-header">
-        <div class="d-flex align-items-center">
-          <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle' %>
-          <div>
-            <%= "#{@user.first_name} #{@user.last_name}" %><br>
+        <div class="media">
+        <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle mr-3' %>
+          <div class="media-body">
+            <h5 class="mt-0"><%= "#{@user.first_name} #{@user.last_name}" %></h5>
             <%= "@#{@user.username}" %>
           </div>
         </div>
@@ -17,11 +17,11 @@
 
         <div class="row">
           <div class="col-12">
-            <% if @user.gender_male? %>
+            <% if @user.male? %>
               <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
-            <% elsif @user.gender_female? %>
+            <% elsif @user.female? %>
               <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
-            <% elsif @user.gender_other? %>
+            <% elsif @user.other? %>
               <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
             <% end %>
           </div>
@@ -48,7 +48,7 @@
       </div>
     <% end %>
     <% if @user.posts.count > 0 %>
-      <%= render partial: @user.posts.order('created_at DESC') %>
+      <%= render partial: 'posts/show', locals: { posts: @user.posts.order(created_at: :desc) } %>
     <% else %>
       <h2 class="text-center">No posts</h2>
     <% end %>

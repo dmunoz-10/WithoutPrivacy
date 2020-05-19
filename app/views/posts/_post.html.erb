@@ -1,12 +1,23 @@
 <% if !post.private? || (post.private? && post.user == current_user) %>
   <% if post.image.attached? %>
-    <div class="card bg-dark text-dark my-3">
+    <div class="card card-image bg-dark my-3">
       <%= image_tag post.image, class: 'card-img' %>
-      <div class="card-img-overlay d-none">
+
+      <div class="card-img-overlay text-white d-none" data-url= "<%= post_url post %>">
         <div class="d-flex justify-content-between">
-          <%= link_to user_path(post.user), class: 'btn' do %>
-            <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %> <%= post.user.username %>
-          <% end %>
+          <div>
+            <%= link_to user_path(post.user), class: 'btn text-white' do %>
+              <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+              <span class="username"><%= post.user.username %></span>
+            <% end %>
+
+            <% if post.description.present? %>
+              <p class="card-text"><%= post.description.truncate 200 %></p>
+            <% end %>
+            <p class="card-text">
+              <small><%= time_ago_in_words(post.created_at).capitalize %></small>
+            </p>
+          </div>
 
           <% if post.private? %>
             <div>
@@ -14,23 +25,14 @@
             </div>
           <% end %>
         </div>
-        <% if post.description.present? %>
-          <p class="card-text"><%= post.description.truncate 40 %></p>
-        <% end %>
-        <p class="card-text"><%= time_ago_in_words(post.created_at).capitalize %></p>
-        <% if post.user == current_user %>
-          <div>
-            <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
-            <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
-          </div>
-        <% end %>
       </div>
     </div>
   <% else %>
     <div class="card bg-light my-3">
       <div class="card-header d-flex justify-content-between">
         <%= link_to user_path(post.user), class: 'btn' do %>
-          <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %> <%= post.user.username %>
+          <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+          <span class="username"><%= post.user.username %></span>
         <% end %>
         <% if post.private? %>
           <div>
@@ -38,18 +40,14 @@
           </div>
         <% end %>
       </div>
-      <div class="card-body">
-        <p class="card-text"><%= post.description %></p>
-        <div class="d-flex justify-content-between align-items-center">
-          <p class="card-text text-muted"><%= time_ago_in_words(post.created_at).capitalize %></p>
-          <% if post.user == current_user %>
-            <div>
-              <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-success' %>
-              <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
-            </div>
-          <% end %>
+      <%= link_to post_path(post), class: 'btn text-left' do %>
+        <div class="card-body">
+          <p class="card-text"><%= post.description %></p>
+          <p class="card-text">
+            <small class="text-muted"><%= time_ago_in_words(post.created_at).capitalize %></small>
+          </p>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>

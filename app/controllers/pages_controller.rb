@@ -7,6 +7,6 @@ class PagesController < ApplicationController
   def home; end
 
   def explorer
-    @posts = Post.all.includes(:user).where.not('private', true).order('created_at DESC')
+    @posts = Post.all.includes(:user).where.not('private', true).order(created_at: :desc)
   end
 end

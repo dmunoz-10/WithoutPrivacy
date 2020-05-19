@@ -16,12 +16,7 @@ class User < ApplicationRecord
 
   USERNAME_REGEXP = /\A(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}\z/.freeze
 
-  enum gender: {
-    male: 0,
-    female: 1,
-    rather_not_to_say: 2,
-    other: 3
-  }, _prefix: true
+  enum gender: { male: 0, female: 1, rather_not_to_say: 2, other: 3 }
 
   validates :first_name, :last_name, :gender, :birth_date, presence: true
   validates :username, presence: true, uniqueness: true, format: { with: USERNAME_REGEXP }

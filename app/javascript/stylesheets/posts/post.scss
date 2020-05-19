@@ -1,0 +1,12 @@
+.card-image {
+  &:hover {
+    > .card-img {
+      background-color: rgba(0,0,0,0.8);
+      filter: brightness(0.3);
+    }
+  }
+}
+
+.card-img-overlay {
+  cursor: pointer;
+}

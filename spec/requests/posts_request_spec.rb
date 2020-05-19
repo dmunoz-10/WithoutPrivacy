@@ -35,7 +35,26 @@ RSpec.describe 'Posts', type: :request do
         post posts_path, params: params
 
         expect(response).to render_template(:new)
-        expect(flash[:errors]).to be_present
+        expect(flash[:alert]).to be_present
+      end
+    end
+  end
+
+  describe 'Get #show' do
+    context 'when post exists' do
+      it 'must render show template' do
+        post = create(:post, user: user)
+        get post_path(post)
+
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context 'when post does not exist' do
+      it 'must render not found' do
+        get '/posts/post_not_found'
+
+        expect(response).to be_not_found
       end
     end
   end
@@ -69,7 +88,7 @@ RSpec.describe 'Posts', type: :request do
         put post_path(post), params: params
 
         expect(response).to render_template(:edit)
-        expect(flash[:errors]).to be_present
+        expect(flash[:alert]).to be_present
       end
     end
   end
