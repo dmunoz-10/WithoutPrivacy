@@ -11,6 +11,9 @@ class User < ApplicationRecord
   extend FriendlyId
   friendly_id :username, use: :slugged
 
+  acts_as_followable
+  acts_as_follower
+
   before_validation :downcase_username
   before_validation :downcase_email
 
@@ -34,6 +37,12 @@ class User < ApplicationRecord
   def avatar_display
     avatar.variant(resize_to_limit: [200, 200])
   end
+
+  def blocked?(user)
+    !followings.where(follower_id: user.id).where(blocked: true).empty?
+  end
+
+  private
 
   def downcase_username
     self.username = username.downcase if username.present?

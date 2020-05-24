@@ -5,7 +5,17 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   mount HealthMonitor::Engine, at: '/health/'
 
-  get ':id', to: 'users#show', as: 'user'
+  resources :users, path: '/', only: :show do
+    member do
+      get :follow
+      get :unfollow
+      get :block
+      get :unblock
+      get :followers
+      get :followings
+    end
+  end
+
   get 'explorer/posts', to: 'pages#explorer', as: 'explorer'
-  resources :posts, except: :index
+  resources :posts, path: '/p', except: :index
 end

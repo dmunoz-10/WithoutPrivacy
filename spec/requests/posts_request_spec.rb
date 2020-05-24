@@ -52,7 +52,7 @@ RSpec.describe 'Posts', type: :request do
 
     context 'when post does not exist' do
       it 'must render not found' do
-        get '/posts/post_not_found'
+        get '/p/post_not_found'
 
         expect(response).to be_not_found
       end

@@ -26,10 +26,12 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'activeadmin'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'arctic_admin'
 gem 'devise'
 gem 'friendly_id', '~> 5.3'
 gem 'health-monitor-rails'
+gem 'pundit'
 gem 'simple_form'
 
 # Use Active Storage variant

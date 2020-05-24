@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'users/show', 'data-turbolinks-track': 'reload' %>
+
 <% content_for :title, @user.username %>
 
 <div class="row">
@@ -31,11 +33,39 @@
           <div class="col-12">
             <i class="fas fa-envelope"></i> <%= @user.email %>
           </div>
-        </div>
 
-        <% if @user != current_user %>
-          <%= link_to 'Follow', '#', class: 'btn btn-outline-primary mt-3' %>
-        <% end %>
+          <div class="col-12 d-flex justify-content-between mt-2 mb-4">
+            <span><%= @user.posts.count %> posts</span>
+
+            <%= link_to followers_user_path(@user), class: 'follows' do %>
+              <span><%= @user.followers_count %> followers</span>
+            <% end %>
+
+            <%= link_to followings_user_path(@user), class: 'follows' do %>
+              <span><%= @user.following_users_count %> following</span>
+            <% end %>
+          </div>
+
+          <div class="col-12 d-flex justify-content-around">
+            <% unless current_user == @user %>
+              <% if policy(@user).follow? %>
+                <%= link_to 'Follow', follow_user_path(@user), class: 'btn btn-primary' %>
+              <% end %>
+
+              <% if policy(@user).unfollow? %>
+                <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
+              <% end %>
+
+              <%# link_to 'Message', '#', class: 'btn btn-outline-secondary' %>
+
+              <% if policy(@user).unblock? %>
+                <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
+              <% else %>
+                <%= link_to 'Block', block_user_path(@user), class: 'btn btn-outline-danger' %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,10 +77,16 @@
                     title: 'Create a new post' %>
       </div>
     <% end %>
-    <% if @user.posts.count > 0 %>
-      <%= render partial: 'posts/show', locals: { posts: @user.posts.order(created_at: :desc) } %>
+    <% unless @user.blocked? current_user %>
+      <% if @user.posts.count > 0 %>
+        <%= render partial: 'posts/show', locals: { posts: @user.posts.order(created_at: :desc) } %>
+      <% else %>
+        <h2 class="text-center">No posts</h2>
+      <% end %>
     <% else %>
-      <h2 class="text-center">No posts</h2>
+      <h2 class="text-center">
+        You have been blocked by <%= "@#{@user.username}" %>, so you can't see any posts.
+      </h2>
     <% end %>
   </div>
 </div>

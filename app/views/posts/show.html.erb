@@ -4,6 +4,12 @@
   <% content_for :title, "#{@post.user.username} post" %>
 <% end %>
 
+<%= link_to :back, class: 'mb-3 ml-2 btn' do %>
+  <span>
+    <i class="fas fa-arrow-left"></i> Go back
+  </span>
+<% end %>
+
 <% if @post.image.attached? %>
   <div class="card mb-3">
     <div class="row no-gutters">

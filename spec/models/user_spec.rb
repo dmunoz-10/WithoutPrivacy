@@ -90,4 +90,23 @@ RSpec.describe User, type: :model do
       expect(user.errors[:password]).to include('is too short (minimum is 6 characters)')
     end
   end
+
+  describe 'blocked method' do
+    let!(:user) { create(:user) }
+    let!(:user2) { create(:user) }
+
+    context 'when a user blocks other user' do
+      it 'must give true' do
+        user.block user2
+
+        expect(user.blocked?(user2)).to eq(true)
+      end
+    end
+
+    context 'when a user does not block other user' do
+      it 'must give false' do
+        expect(user.blocked?(user2)).to eq(false)
+      end
+    end
+  end
 end

@@ -3,6 +3,12 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <%= link_to :back, class: 'mb-3 ml-2 btn' do %>
+        <span>
+          <i class="fas fa-arrow-left"></i> Go back
+        </span>
+      <% end %>
+
       <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
       <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), method: :put) do |f| %>
@@ -127,8 +133,6 @@
       <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name),
                       data: { confirm: "Are you sure?" }, class: 'btn btn-outline-danger',
                       method: :delete %></p>
-
-      <%= link_to "Back", :back %>
     </div>
   </div>
 </div>
