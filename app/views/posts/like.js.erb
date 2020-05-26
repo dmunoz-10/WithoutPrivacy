@@ -1,0 +1,2 @@
+$('#likes-count-<%= @post.id %>').html("<%= j render 'posts/likes', post: @post %>")
+$('#like-link-<%= @post.id %>').html("<%= j render 'posts/like_link', post: @post %>")

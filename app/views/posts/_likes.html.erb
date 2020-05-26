@@ -1,0 +1,3 @@
+<%= link_to users_liked_post_path(post), remote: :true, class: 'btn' do %>
+  <%= pluralize(post.get_upvotes.size, 'Like') %>
+<% end %>

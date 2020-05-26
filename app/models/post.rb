@@ -2,6 +2,8 @@
 
 # Post Model
 class Post < ApplicationRecord
+  acts_as_votable
+
   before_validation { self.private ||= false }
 
   validate :presence_image_or_description

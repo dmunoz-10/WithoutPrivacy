@@ -1,12 +1,22 @@
-.card-image {
+.card-img {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.liked {
+  color: red;
+
   &:hover {
-    > .card-img {
-      background-color: rgba(0,0,0,0.8);
-      filter: brightness(0.3);
-    }
+    color: gray;
   }
 }
 
-.card-img-overlay {
-  cursor: pointer;
+.unliked {
+  color: gray;
+
+  &:hover {
+    color: red;
+  }
 }

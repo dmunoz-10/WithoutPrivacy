@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'posts/post', 'data-turbolinks-track': 'reload' %>
+
 <% if @post.description.present? %>
   <% content_for :title, "#{@post.user.username} on post: #{@post.description.truncate(26)}" %>
 <% else %>
@@ -11,24 +13,57 @@
 <% end %>
 
 <% if @post.image.attached? %>
-  <div class="card mb-3">
-    <div class="row no-gutters">
-      <div class="col-md-8">
-        <%= image_tag @post.image, class: 'card-img' %>
-      </div>
-      <div class="col-md-4">
-        <div class="card-body">
-          <%= link_to user_path(@post.user), class: 'btn' do %>
-            <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
-            <span class="username"><%= @post.user.username %></span>
-          <% end %>
+  <div class="row">
+    <div class="col-md-8" style="padding: 0">
+      <%= image_tag @post.image, class: 'card-img sticky-top pt-3' %>
+    </div>
 
-          <% if @post.description.present? %>
-            <p class="card-text"><%= @post.description %></p>
-          <% end %>
-          <p class="card-text">
-            <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
-          </p>
+    <div class="col-md-4 mt-3" style="padding: 0 4px">
+      <div class="card mb-3">
+        <div class="no-gutters">
+          <div class="card-body">
+            <%= link_to user_path(@post.user), class: 'btn' do %>
+              <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+              <span class="username"><%= @post.user.username %></span>
+            <% end %>
+
+            <% if @post.description.present? %>
+              <p class="card-text"><%= @post.description %></p>
+            <% end %>
+
+            <p class="card-text">
+              <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
+            </p>
+
+            <% if @post.user == current_user %>
+              <div class="d-flex justify-content-end my-3">
+                <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-success mr-2' %>
+                <%= link_to 'Delete', post_path(@post), method: :delete,
+                            data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+              </div>
+            <% end %>
+
+            <div class="row">
+              <div class="col-6 text-center">
+                <div id="likes-count-<%= @post.id %>">
+                  <%= render 'posts/likes', post: @post %>
+                </div>
+              </div>
+              <div class="col-6 text-center">
+                <span>2 Comments</span>
+              </div>
+              <div class="col-6 text-center">
+                <div id="like-link-<%= @post.id %>">
+                  <%= render 'posts/like_link', post: @post %>
+                </div>
+              </div>
+              <div class="col-6 text-center">
+                <%= link_to '#' do %>
+                <i class="fas fa-comment-dots"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -44,6 +79,37 @@
       <p class="card-text">
         <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
       </p>
+
+      <% if @post.user == current_user %>
+        <div class="d-flex justify-content-end my-3">
+          <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-success mr-2' %>
+          <%= link_to 'Delete', post_path(@post), method: :delete,
+                      data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-6 text-center">
+          <div id="likes-count-<%= @post.id %>">
+            <%= render 'posts/likes', post: @post %>
+          </div>
+        </div>
+        <div class="col-6 text-center">
+          <span>2 Comments</span>
+        </div>
+        <div class="col-6 text-center">
+          <div id="like-link-<%= @post.id %>">
+            <%= render 'posts/like_link', post: @post %>
+          </div>
+        </div>
+        <div class="col-6 text-center">
+          <%= link_to '#' do %>
+          <i class="fas fa-comment-dots"></i>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
+
+<%= render partial: 'posts/modal_users_liked' %>

@@ -5,6 +5,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, except: %i[new create]
 
+  respond_to :js, :html, :json
+
   rescue_from ActiveRecord::RecordNotFound, with: :content_not_found
 
   def new
@@ -40,6 +42,18 @@ class PostsController < ApplicationController
     else
       redirect_to :back, alert: 'There was an error!'
     end
+  end
+
+  def like
+    if current_user.voted_for? @post
+      @post.unliked_by current_user
+    else
+      @post.liked_by current_user
+    end
+  end
+
+  def users_liked
+    @users = @post.votes_for.up.by_type(User).voters
   end
 
   private

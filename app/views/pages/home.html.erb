@@ -1,2 +1,29 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% if user_signed_in? %>
+  <div class="row">
+    <div class="col-12 col-lg-8 mb-4">
+      <% if @posts.size > 0 %>
+        <%= render partial: 'posts/show', locals: { posts: @posts } %>
+      <% else %>
+        <h2 class="text-center">No posts</h2>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="sticky-top text-center">
+        <h3 class="mt-3">Stories</h3>
+
+        <p>Soon</p>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <h2 class="mt-3 mb-4">
+    Enter into our community :D
+  </h2>
+
+  <p>
+    Come and sign up in our page, where you can share all your happy moments, well,
+    all your data, and if it's your personal information it would be better, because remember
+    <strong>privacy is overrated</strong> :)
+  </p>
+<% end %>

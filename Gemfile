@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'activeadmin'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+gem 'acts_as_votable'
 gem 'arctic_admin'
 gem 'devise'
 gem 'friendly_id', '~> 5.3'

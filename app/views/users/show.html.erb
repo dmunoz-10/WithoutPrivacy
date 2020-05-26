@@ -4,66 +4,68 @@
 
 <div class="row">
   <div class="col-12 col-lg-4 mb-5">
-    <div class="card">
-      <div class="card-header">
-        <div class="media">
-        <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle mr-3' %>
-          <div class="media-body">
-            <h5 class="mt-0"><%= "#{@user.first_name} #{@user.last_name}" %></h5>
-            <%= "@#{@user.username}" %>
+    <div class="sticky-top pt-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="media">
+          <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle mr-3' %>
+            <div class="media-body">
+              <h5 class="mt-0"><%= "#{@user.first_name} #{@user.last_name}" %></h5>
+              <%= "@#{@user.username}" %>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="card-body">
-        <p><%= @user.description %></p>
+        <div class="card-body">
+          <p><%= @user.description %></p>
 
-        <div class="row">
-          <div class="col-12">
-            <% if @user.male? %>
-              <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
-            <% elsif @user.female? %>
-              <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
-            <% elsif @user.other? %>
-              <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
-            <% end %>
-          </div>
-          <div class="col-12">
-            <i class="fas fa-birthday-cake"></i> <%= l @user.birth_date, format: :long %>
-          </div>
-          <div class="col-12">
-            <i class="fas fa-envelope"></i> <%= @user.email %>
-          </div>
+          <div class="row">
+            <div class="col-12">
+              <% if @user.male? %>
+                <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
+              <% elsif @user.female? %>
+                <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
+              <% elsif @user.other? %>
+                <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
+              <% end %>
+            </div>
+            <div class="col-12">
+              <i class="fas fa-birthday-cake"></i> <%= l @user.birth_date, format: :long %>
+            </div>
+            <div class="col-12">
+              <i class="fas fa-envelope"></i> <%= @user.email %>
+            </div>
 
-          <div class="col-12 d-flex justify-content-between mt-2 mb-4">
-            <span><%= @user.posts.count %> posts</span>
+            <div class="col-12 d-flex justify-content-between mt-2 mb-4">
+              <span><%= @user.posts.count %> posts</span>
 
-            <%= link_to followers_user_path(@user), class: 'follows' do %>
-              <span><%= @user.followers_count %> followers</span>
-            <% end %>
-
-            <%= link_to followings_user_path(@user), class: 'follows' do %>
-              <span><%= @user.following_users_count %> following</span>
-            <% end %>
-          </div>
-
-          <div class="col-12 d-flex justify-content-around">
-            <% unless current_user == @user %>
-              <% if policy(@user).follow? %>
-                <%= link_to 'Follow', follow_user_path(@user), class: 'btn btn-primary' %>
+              <%= link_to followers_user_path(@user), class: 'follows', remote: :true do %>
+                <span><%= @user.followers_count %> followers</span>
               <% end %>
 
-              <% if policy(@user).unfollow? %>
-                <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
+              <%= link_to followings_user_path(@user), class: 'follows', remote: :true do %>
+                <span><%= @user.following_users_count %> following</span>
               <% end %>
+            </div>
 
-              <%# link_to 'Message', '#', class: 'btn btn-outline-secondary' %>
+            <div class="col-12 d-flex justify-content-around">
+              <% unless current_user == @user %>
+                <% if policy(@user).follow? %>
+                  <%= link_to 'Follow', follow_user_path(@user), class: 'btn btn-primary' %>
+                <% end %>
 
-              <% if policy(@user).unblock? %>
-                <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
-              <% else %>
-                <%= link_to 'Block', block_user_path(@user), class: 'btn btn-outline-danger' %>
+                <% if policy(@user).unfollow? %>
+                  <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
+                <% end %>
+
+                <%# link_to 'Message', '#', class: 'btn btn-outline-secondary' %>
+
+                <% if policy(@user).unblock? %>
+                  <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
+                <% else %>
+                  <%= link_to 'Block', block_user_path(@user), class: 'btn btn-outline-danger' %>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>
@@ -88,5 +90,22 @@
         You have been blocked by <%= "@#{@user.username}" %>, so you can't see any posts.
       </h2>
     <% end %>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-follows" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Follows</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group list-group-flush" id="follows-list">
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

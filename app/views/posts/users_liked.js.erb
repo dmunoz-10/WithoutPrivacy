@@ -1,0 +1,9 @@
+$('.modal-title').html(`<%= "Users (#{@users.size})" %>`)
+
+<% unless @users.empty? %>
+  $('#users-list').html(`<%= j render 'users/list' %>`)
+<% else %>
+  $('#users-list').html(`<p class="text-center">Empty</p>`)
+<% end %>
+
+$('#modal-users-liked').modal('show')

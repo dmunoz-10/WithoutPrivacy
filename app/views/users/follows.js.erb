@@ -1,0 +1,9 @@
+$('.modal-title').html(`<%= "#{action_name.capitalize} (#{@users.size})" %>`)
+
+<% unless @users.empty? %>
+  $('#follows-list').html(`<%= j render 'users/list' %>`)
+<% else %>
+  $('#follows-list').html(`<p class="text-center">Empty</p>`)
+<% end %>
+
+$('#modal-follows').modal('show')
