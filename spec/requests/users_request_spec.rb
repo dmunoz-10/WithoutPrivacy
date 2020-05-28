@@ -79,8 +79,10 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #followers' do
     context 'when the user has not blocked the current user' do
       it 'must render follows template' do
-        get followers_user_path(user2)
+        get followers_user_path(user2), xhr: true
 
+        expect(response).to be_successful
+        expect(response.content_type).to eq('text/javascript; charset=utf-8')
         expect(response).to render_template(:follows)
       end
     end
@@ -89,8 +91,10 @@ RSpec.describe 'Users', type: :request do
   describe 'GET #followings' do
     context 'when the user has not blocked the current user' do
       it 'must render follows template' do
-        get followings_user_path(user2)
+        get followings_user_path(user2), xhr: true
 
+        expect(response).to be_successful
+        expect(response.content_type).to eq('text/javascript; charset=utf-8')
         expect(response).to render_template(:follows)
       end
     end

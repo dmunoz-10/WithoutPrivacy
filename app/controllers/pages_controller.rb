@@ -2,8 +2,6 @@
 
 # Pages Controller
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: %i[home explorer terms_conditions privacy_policy]
-
   def home
     if user_signed_in?
       ids = current_user.all_following.pluck(:id)
@@ -15,10 +13,10 @@ class PagesController < ApplicationController
   end
 
   def explorer
-    @posts = Post.all.includes(:user).where.not('private', true).order(created_at: :desc)
+    @posts = Post.all.includes(:user).where.not(private: true).order(created_at: :desc)
   end
 
-  def terms_conditions; end
+  def terms_service; end
 
   def privacy_policy; end
 end

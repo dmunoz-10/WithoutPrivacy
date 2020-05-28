@@ -8,8 +8,14 @@
       <div class="card">
         <div class="card-header">
           <div class="media">
-          <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle mr-3' %>
-            <div class="media-body">
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar_thumbnail, class: 'border rounded-circle' %>
+          <% else %>
+            <div class="no-avatar">
+              <%= @user.first_name.first + @user.last_name.first %>
+            </div>
+          <% end %>
+            <div class="media-body ml-3">
               <h5 class="mt-0"><%= "#{@user.first_name} #{@user.last_name}" %></h5>
               <%= "@#{@user.username}" %>
             </div>
@@ -38,11 +44,19 @@
             <div class="col-12 d-flex justify-content-between mt-2 mb-4">
               <span><%= @user.posts.count %> posts</span>
 
-              <%= link_to followers_user_path(@user), class: 'follows', remote: :true do %>
-                <span><%= @user.followers_count %> followers</span>
+              <% if policy(@user).followers? %>
+                <%= link_to followers_user_path(@user), class: 'follows', remote: :true do %>
+                  <span><%= pluralize(@user.followers_count, 'followers') %></span>
+                <% end %>
+              <% else %>
+                <span><%= pluralize(@user.followers_count, 'followers') %></span>
               <% end %>
 
-              <%= link_to followings_user_path(@user), class: 'follows', remote: :true do %>
+              <% if policy(@user).followings? %>
+                <%= link_to followings_user_path(@user), class: 'follows', remote: :true do %>
+                  <span><%= @user.following_users_count %> following</span>
+                <% end %>
+              <% else %>
                 <span><%= @user.following_users_count %> following</span>
               <% end %>
             </div>
@@ -97,7 +111,7 @@
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Follows</h5>
+        <h5 class="modal-title" id="modal-title-follows">Follows</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

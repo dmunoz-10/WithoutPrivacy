@@ -1,4 +1,5 @@
-$('.modal-title').html(`<%= "Users (#{@users.size})" %>`)
+$('#modal-title-users-liked').html(`<%= "Users (#{@users.size})" %>`)
+$('#likes-count-<%= @post.id %>').html(`<%= j render partial: 'posts/likes', locals: { post: @post } %>`)
 
 <% unless @users.empty? %>
   $('#users-list').html(`<%= j render 'users/list' %>`)

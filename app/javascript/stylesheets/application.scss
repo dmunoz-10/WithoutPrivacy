@@ -5,3 +5,17 @@
     text-decoration: underline;
   }
 }
+
+.no-avatar {
+  display: inline-block;
+  font-size: 1em;
+  width: 40px;
+  height: 40px;
+  line-height: 2.5em;
+  text-align: center;
+  border-radius: 50%;
+  background-color: gray;
+  color: white;
+  -webkit-user-select: none;
+  user-select: none;
+}

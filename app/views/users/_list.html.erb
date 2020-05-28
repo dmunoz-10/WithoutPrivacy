@@ -1,15 +1,21 @@
 <% @users.each do |user| %>
-  <%= link_to user_path(user), class: 'list-group-item btn' do %>
-    <div class="d-flex">
-      <%= image_tag user.avatar_thumbnail, class: 'border rounded-circle' %>
-      <div class="text-left ml-1">
-        <div class="col-12">
-          <span class="username"><%= user.username %></span>
+  <%= link_to user_path(user), class: 'list-group-item btn text-left', style: 'padding: 0; margin: 5px 10px' do %>
+    <div class="media">
+      <% if user.avatar.attached? %>
+        <%= image_tag user.avatar_thumbnail, class: 'border rounded-circle' %>
+      <% else %>
+        <div class="no-avatar">
+          <%= user.first_name.first + user.last_name.first %>
         </div>
+      <% end %>
+      <div class="media-body ml-2">
+        <h6 class="mt-0">
+          <span class="username"><%= user.username %></span>
+        </h6>
         <% if user.description.present? %>
-          <div class="col-12">
+          <p>
             <span class="text-muted"><%= user.description %></span>
-          </div>
+          </p>
         <% end %>
       </div>
     </div>

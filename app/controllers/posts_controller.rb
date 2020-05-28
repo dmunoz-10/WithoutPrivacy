@@ -2,7 +2,7 @@
 
 # Posts Controller
 class PostsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :users_liked
   before_action :set_post, except: %i[new create]
 
   respond_to :js, :html, :json
@@ -10,11 +10,11 @@ class PostsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :content_not_found
 
   def new
-    @post = Post.new
+    @post = authorize Post.new
   end
 
   def create
-    @post = current_user.posts.new(post_params)
+    @post = authorize current_user.posts.new(post_params)
     if @post.save
       redirect_to user_url(@post.user), notice: 'Post created successfully!'
     else
@@ -63,6 +63,6 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = authorize Post.find(params[:id]), policy_class: PostPolicy
   end
 end

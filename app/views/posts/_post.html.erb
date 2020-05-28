@@ -1,19 +1,27 @@
 <% if !post.private? || (post.private? && post.user == current_user) %>
   <div class="card bg-light my-3">
-    <div class="card-header d-flex justify-content-between">
-      <%= link_to user_path(post.user), class: 'btn' do %>
-        <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %>
-        <span class="username"><%= post.user.username %></span>
-      <% end %>
-      <% if post.private? %>
-        <div>
-          <span class="badge badge-secondary">Private</span>
-        </div>
-      <% end %>
+    <div class="card-header">
+      <div class="media">
+        <% if post.user.avatar.attached? %>
+          <%= image_tag post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+        <% else %>
+          <div class="no-avatar">
+            <%= post.user.first_name.first + post.user.last_name.first %>
+          </div>
+        <% end %>
+        <%= link_to user_path(post.user), class: 'btn' do %>
+          <span class="username"><%= post.user.username %></span>
+        <% end %>
+        <% if post.private? %>
+          <div class="w-100 text-right">
+            <span class="badge badge-secondary">Private</span>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <%= link_to post_path(post), class: 'btn text-left' do %>
+    <%= link_to post_path(post), class: 'btn text-left', style: 'padding: 0' do %>
       <%= image_tag post.image, class: 'card-img' if post.image.attached? %>
-      <div class="card-body p-2">
+      <div class="card-body" style="padding: 15px 15px 0">
         <% if post.description.present? %>
           <p class="card-text"><%= post.description %></p>
         <% end %>
@@ -22,19 +30,39 @@
         </p>
       </div>
     <% end %>
-    <div class="d-flex justify-content-around">
-      <div id="likes-count-<%= post.id %>" class="ml-4">
+    <div class="d-flex justify-content-around pb-2">
+      <div id="likes-count-<%= post.id %>" class="ml-3">
         <%= render 'posts/likes', post: post %>
       </div>
 
-      <span>2 Comments</span>
-    </div>
-    <div class="card-body d-flex justify-content-around" style="margin: 0; padding: 0">
-      <div id="like-link-<%= post.id %>">
-        <%= render 'posts/like_link', post: post %>
+      <div id="comments-count-<%= post.id %>">
+        <%= render 'comments/comments_count', post: post %>
       </div>
-      <%= link_to '#' do %>
-        <i class="fas fa-comment-dots"></i>
+    </div>
+    <% if user_signed_in? %>
+      <div class="card-body d-flex justify-content-around border-top" style="margin: 0; padding: 0">
+        <div id="like-link-<%= post.id %>">
+          <%= render 'posts/like_link', post: post %>
+        </div>
+        <span class="add-comment btn" data-id="<%= post.id %>">
+          <i class="fas fa-comment-dots"></i>
+        </span>
+      </div>
+    <% end %>
+    <div id="add-comment-<%= post.id %>" style="display: none">
+      <%= form_with url: post_comments_path(post) do |f| %>
+        <div class="d-flex justify-content-around align-items-center">
+          <div class="w-100 m-2">
+            <%= f.text_area :text,
+                            class: 'form-control',
+                            id:"text-area-#{post.id}",
+                            size: '60x2',
+                            style:'resize: none' %>
+          </div>
+          <div class="m-2">
+            <%= f.submit 'Send', class: 'btn btn-success' %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>

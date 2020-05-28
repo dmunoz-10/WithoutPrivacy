@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   mount HealthMonitor::Engine, at: '/health/'
 
   scope '/help_center' do
-    get 'terms_&_conditions', to: 'pages#terms_conditions', as: 'terms_conditions'
+    get 'terms_service', to: 'pages#terms_service', as: 'terms_service'
     get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
   end
 
@@ -27,5 +27,7 @@ Rails.application.routes.draw do
       put :like
       get :users_liked
     end
+
+    resources :comments, only: %i[index create destroy]
   end
 end

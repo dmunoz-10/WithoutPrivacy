@@ -1,0 +1,5 @@
+$('#modal-title-comments').html(`<%= "Comments (#{@comments.size})" %>`)
+
+<%= render 'comments/comments_list' %>
+
+$('#modal-comments').modal('show')

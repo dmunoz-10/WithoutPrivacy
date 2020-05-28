@@ -10,6 +10,7 @@ class Post < ApplicationRecord
   validate :correct_image_type, if: -> { image.attached? }
 
   belongs_to :user
+  has_many :comments, dependent: :destroy
 
   has_one_attached :image
 

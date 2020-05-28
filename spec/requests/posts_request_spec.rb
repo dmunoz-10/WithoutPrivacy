@@ -118,4 +118,42 @@ RSpec.describe 'Posts', type: :request do
       end
     end
   end
+
+  describe 'GET #like' do
+    let!(:post) { create(:post, user: user) }
+
+    context 'the user already liked the post' do
+      it 'must dislike the post' do
+        post.liked_by user
+
+        put like_post_path(post), xhr: true
+
+        expect(response).to be_successful
+        expect(response.content_type).to eq('text/javascript; charset=utf-8')
+        expect(user.voted_for?(post)).to eq(false)
+      end
+    end
+
+    context 'the user did not like the post' do
+      it 'must like the post' do
+        put like_post_path(post), xhr: true
+
+        expect(response).to be_successful
+        expect(response.content_type).to eq('text/javascript; charset=utf-8')
+        expect(user.voted_for?(post)).to eq(true)
+      end
+    end
+  end
+
+  describe 'GET #users_liked' do
+    let!(:post) { create(:post, user: user) }
+
+    it 'must show the users that liked the post' do
+      get users_liked_post_path(post), xhr: true
+
+      expect(response).to be_successful
+      expect(response.content_type).to eq('text/javascript; charset=utf-8')
+      expect(response).to render_template(:users_liked)
+    end
+  end
 end

@@ -23,7 +23,13 @@
         <div class="no-gutters">
           <div class="card-body">
             <%= link_to user_path(@post.user), class: 'btn' do %>
-              <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+              <% if @post.user.avatar.attached? %>
+                <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+              <% else %>
+                <div class="no-avatar">
+                  <%= @post.user.first_name.first + @post.user.last_name.first %>
+                </div>
+              <% end %>
               <span class="username"><%= @post.user.username %></span>
             <% end %>
 
@@ -49,8 +55,8 @@
                   <%= render 'posts/likes', post: @post %>
                 </div>
               </div>
-              <div class="col-6 text-center">
-                <span>2 Comments</span>
+              <div class="col-6 text-center" id="show-comments-count">
+                <span><%= pluralize(@post.comments.count, 'Comment') %></span>
               </div>
               <div class="col-6 text-center">
                 <div id="like-link-<%= @post.id %>">
@@ -58,11 +64,30 @@
                 </div>
               </div>
               <div class="col-6 text-center">
-                <%= link_to '#' do %>
                 <i class="fas fa-comment-dots"></i>
-                <% end %>
               </div>
             </div>
+
+            <div class="mt-3">
+              <ul class="list-group list-group-flush" id="comments-list">
+                <%= render partial: 'comments/list', locals: { comments: @post.comments } %>
+              </ul>
+            </div>
+
+            <%= form_with url: post_comments_path(@post) do |f| %>
+              <div class="d-flex justify-content-around align-items-center">
+                <div class="w-100 m-2">
+                  <%= f.text_area :text,
+                                  class: 'form-control',
+                                  id:"text-area-#{@post.id}",
+                                  size: '60x2',
+                                  style:'resize: none' %>
+                </div>
+                <div class="m-2">
+                  <%= f.submit 'Send', class: 'btn btn-success' %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -72,7 +97,13 @@
   <div class="card w-100">
     <div class="card-body">
       <%= link_to user_path(@post.user), class: 'btn' do %>
-        <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+        <% if @post.user.avatar.attached? %>
+          <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
+        <% else %>
+          <div class="no-avatar">
+            <%= @post.user.first_name.first + @post.user.last_name.first %>
+          </div>
+        <% end %>
         <span class="username"><%= @post.user.username %></span>
       <% end %>
       <p class="card-text"><%= @post.description %></p>
@@ -80,7 +111,7 @@
         <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
       </p>
 
-      <% if @post.user == current_user %>
+      <% if policy(@post).edit? && policy(@post).destroy? %>
         <div class="d-flex justify-content-end my-3">
           <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-success mr-2' %>
           <%= link_to 'Delete', post_path(@post), method: :delete,
@@ -94,8 +125,8 @@
             <%= render 'posts/likes', post: @post %>
           </div>
         </div>
-        <div class="col-6 text-center">
-          <span>2 Comments</span>
+        <div class="col-6 text-center" id="show-comments-count">
+          <span><%= pluralize(@post.comments.count, 'Comment') %></span>
         </div>
         <div class="col-6 text-center">
           <div id="like-link-<%= @post.id %>">
@@ -103,13 +134,32 @@
           </div>
         </div>
         <div class="col-6 text-center">
-          <%= link_to '#' do %>
           <i class="fas fa-comment-dots"></i>
-          <% end %>
         </div>
       </div>
+
+      <div class="my-3">
+        <ul class="list-group list-group-flush" id="comments-list">
+          <%= render partial: 'comments/list', locals: { comments: @post.comments } %>
+        </ul>
+      </div>
+
+      <%= form_with url: post_comments_path(@post) do |f| %>
+        <div class="d-flex justify-content-around align-items-center">
+          <div class="w-100 m-2">
+            <%= f.text_area :text,
+                            class: 'form-control',
+                            id:"text-area-#{@post.id}",
+                            size: '60x2',
+                            style:'resize: none' %>
+          </div>
+          <div class="m-2">
+            <%= f.submit 'Send', class: 'btn btn-success' %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
 
-<%= render partial: 'posts/modal_users_liked' %>
+<%= render partial: 'posts/modal_likes' %>

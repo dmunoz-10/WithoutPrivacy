@@ -22,4 +22,18 @@ RSpec.describe 'Pages', type: :request do
       expect(response).to render_template(:explorer)
     end
   end
+
+  describe 'GET #terms_service' do
+    it 'must render terms service template' do
+      get terms_service_path
+      expect(response).to render_template(:terms_service)
+    end
+  end
+
+  describe 'GET #privacy_policy' do
+    it 'must render privacy policy template' do
+      get privacy_policy_path
+      expect(response).to render_template(:privacy_policy)
+    end
+  end
 end
