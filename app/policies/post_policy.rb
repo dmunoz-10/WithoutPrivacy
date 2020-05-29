@@ -16,6 +16,8 @@ class PostPolicy < ApplicationPolicy
   end
 
   def show?
+    return true if !user && !record.private?
+
     (!record.private? && !record.user.blocked?(user)) || record.user == user
   end
 

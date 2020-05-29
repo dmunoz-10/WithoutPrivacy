@@ -23,6 +23,24 @@ RSpec.describe PostPolicy, type: :policy do
   end
 
   permissions :show? do
+    describe 'the user is not sign in' do
+      context 'when the post is private' do
+        let!(:post) { create(:post, :private, user: user2) }
+
+        it 'denies access' do
+          expect(subject).not_to permit(nil, post)
+        end
+      end
+
+      context 'when the post is public' do
+        let!(:post) { create(:post, :public, user: user2) }
+
+        it 'grants access' do
+          expect(subject).to permit(nil, post)
+        end
+      end
+    end
+
     describe 'it is the post of the user' do
       let!(:post) { create(:post, user: user) }
 

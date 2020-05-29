@@ -1,4 +1,4 @@
-<% if !post.private? || (post.private? && post.user == current_user) %>
+<% if policy(post).show? %>
   <div class="card bg-light my-3">
     <div class="card-header">
       <div class="media">
@@ -23,7 +23,7 @@
       <%= image_tag post.image, class: 'card-img' if post.image.attached? %>
       <div class="card-body" style="padding: 15px 15px 0">
         <% if post.description.present? %>
-          <p class="card-text"><%= post.description %></p>
+          <%= markdown post.description %>
         <% end %>
         <p class="card-text">
           <small class="text-muted"><%= time_ago_in_words(post.created_at).capitalize %></small>

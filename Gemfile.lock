@@ -247,6 +247,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redcarpet (3.5.0)
     regexp_parser (1.7.0)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -372,6 +373,7 @@ DEPENDENCIES
   pundit
   rails (~> 6.0.2, >= 6.0.2.2)
   rails-controller-testing
+  redcarpet (~> 3.5)
   rspec-rails (~> 4.0.0)
   rubocop (~> 0.82.0)
   rubocop-rails

@@ -11,7 +11,12 @@
       <div class="media-body ml-2">
         <h6 class="mt-0">
           <%= link_to user_path(comment.user) do %>
-            <span class="username"><%= comment.user.username %></span>
+            <span class="username">
+              <%= comment.user.username %>
+              <span class="text-muted btn" style="font-size: 12px; padding: 0; margin: 0; vertical-align: top">
+                 - <%= time_ago_in_words(comment.created_at).capitalize %>
+               </span>
+             </span>
           <% end %>
           <% if user_signed_in? && comment.user == @current_user %>
             <%= link_to post_comment_path(comment.post, comment), method: :delete, remote: :true, class: 'btn',
@@ -22,12 +27,7 @@
             <% end %>
           <% end %>
         </h6>
-        <span><%= comment.text %></span>
-        <p>
-          <small class="text-right text-muted">
-            <%= time_ago_in_words(comment.created_at).capitalize %>
-          </small>
-        </p>
+        <%= markdown comment.text %>
       </div>
     </div>
   </li>

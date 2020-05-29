@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="card-body">
-          <p><%= @user.description %></p>
+          <%= markdown @user.description if @user.description.present? %>
 
           <div class="row">
             <div class="col-12">
@@ -101,14 +101,14 @@
       <% end %>
     <% else %>
       <h2 class="text-center">
-        You have been blocked by <%= "@#{@user.username}" %>, so you can't see any posts.
+        You have been blocked by <%= "@#{@user.username}" %>, so you can't see any post.
       </h2>
     <% end %>
   </div>
 </div>
 
 <div class="modal fade" id="modal-follows" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
+  <div class="modal-dialog modal-sm modal-dialog-scrollable modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modal-title-follows">Follows</h5>

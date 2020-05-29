@@ -23,7 +23,7 @@ RSpec.describe 'Posts', type: :request do
         params = { post: attributes_for(:post) }
         post posts_path, params: params
 
-        expect(response).to redirect_to(user_path(user))
+        expect(response).to redirect_to(post_path(user.posts.last))
         expect(flash[:notice]).to be_present
         expect(flash[:notice]).to eq('Post created successfully!')
       end
@@ -76,7 +76,7 @@ RSpec.describe 'Posts', type: :request do
         params = { post: attributes_for(:post) }
         put post_path(post), params: params
 
-        expect(response).to redirect_to(user_path(user))
+        expect(response).to redirect_to(post_path(post))
         expect(flash[:notice]).to be_present
         expect(flash[:notice]).to eq('Post updated successfully!')
       end

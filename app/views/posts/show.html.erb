@@ -22,7 +22,7 @@
       <div class="card mb-3">
         <div class="no-gutters">
           <div class="card-body">
-            <%= link_to user_path(@post.user), class: 'btn' do %>
+            <%= link_to user_path(@post.user), class: 'btn mb-2' do %>
               <% if @post.user.avatar.attached? %>
                 <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
               <% else %>
@@ -34,7 +34,7 @@
             <% end %>
 
             <% if @post.description.present? %>
-              <p class="card-text"><%= @post.description %></p>
+              <%= markdown @post.description %>
             <% end %>
 
             <p class="card-text">
@@ -96,7 +96,7 @@
 <% else %>
   <div class="card w-100">
     <div class="card-body">
-      <%= link_to user_path(@post.user), class: 'btn' do %>
+      <%= link_to user_path(@post.user), class: 'btn mb-2' do %>
         <% if @post.user.avatar.attached? %>
           <%= image_tag @post.user.avatar_thumbnail, class: 'border rounded-circle' %>
         <% else %>
@@ -106,7 +106,7 @@
         <% end %>
         <span class="username"><%= @post.user.username %></span>
       <% end %>
-      <p class="card-text"><%= @post.description %></p>
+      <%= markdown @post.description %>
       <p class="card-text">
         <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
       </p>

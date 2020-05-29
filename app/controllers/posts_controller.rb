@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   def create
     @post = authorize current_user.posts.new(post_params)
     if @post.save
-      redirect_to user_url(@post.user), notice: 'Post created successfully!'
+      redirect_to post_url(@post), notice: 'Post created successfully!'
     else
       flash.now[:alert] = @post.errors.full_messages.to_sentence
       render :new
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to user_url(@post.user), notice: 'Post updated successfully!'
+      redirect_to post_url(@post), notice: 'Post updated successfully!'
     else
       flash.now[:alert] = @post.errors.full_messages.to_sentence
       render :edit

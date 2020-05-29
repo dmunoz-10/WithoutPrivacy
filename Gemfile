@@ -33,6 +33,7 @@ gem 'devise'
 gem 'friendly_id', '~> 5.3'
 gem 'health-monitor-rails'
 gem 'pundit'
+gem 'redcarpet', '~> 3.5'
 gem 'simple_form'
 
 # Use Active Storage variant
