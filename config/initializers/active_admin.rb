@@ -336,4 +336,14 @@ ActiveAdmin.setup do |config|
   meta_tags_options = { viewport: 'width=device-width, initial-scale=1' }
   config.meta_tags = meta_tags_options
   config.meta_tags_for_logged_out_pages = meta_tags_options
+
+  ActiveAdmin::ResourceController.class_eval do
+    def find_resource
+      if resource_class.is_a?(FriendlyId)
+        scoped_collection.friendly.find(params[:id])
+      else
+        scoped_collection.find(params[:id])
+      end
+    end
+  end
 end

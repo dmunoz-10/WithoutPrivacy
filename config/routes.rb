@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   scope '/help_center' do
     get 'terms_service', to: 'pages#terms_service', as: 'terms_service'
     get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
+    get 'markdown_rules', to: 'pages#markdown_rules', as: 'markdown_rules'
   end
 
   resources :users, path: '/', only: :show do
