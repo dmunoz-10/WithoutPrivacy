@@ -1,25 +1,36 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Post do
-  permit_params :user_id, :description, :private
+  permit_params :user_id, :image, :description, :private
 
   index do
     selectable_column
-    id_column
-    column :user
+    column :id do |post|
+      post.id.truncate 15
+    end
+    column :user do |post|
+      post.user.username
+    end
     column :description do |post|
-      post.description.truncate 60
+      truncate(strip_tags(markdown(post.description)), length: 60)
     end
     column :private
+    column :created_at
+    column :updated_at
     actions
   end
 
   filter :user
   filter :private
+  filter :created_at
+  filter :updated_at
 
   show do |post|
     attributes_table do
       row :id
+      row :image do
+        link_to 'Image', url_for(post.image), target: :blank if post.image.attached?
+      end
       row 'Description' do
         markdown post.description
       end
@@ -30,6 +41,7 @@ ActiveAdmin.register Post do
   form do |f|
     f.inputs do
       f.input :user
+      f.input :image, as: :file
       f.input :description, as: :text
       f.input :private
     end

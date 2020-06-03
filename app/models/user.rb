@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   before_validation :downcase_username
   before_validation :downcase_email
+  before_save :capitalize_name
 
   USERNAME_REGEXP = /\A(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}\z/.freeze
 
@@ -31,6 +32,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :notifications, foreign_key: :recipient_id
 
   def avatar_thumbnail
     avatar.variant(resize_to_fill: [40, 40])
@@ -52,5 +54,10 @@ class User < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase if email.present?
+  end
+
+  def capitalize_name
+    self.first_name = first_name.capitalize
+    self.last_name = last_name.capitalize
   end
 end

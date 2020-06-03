@@ -1,8 +1,8 @@
 class ActsAsFollowerMigration < ActiveRecord::Migration[6.0]
   def self.up
     create_table :follows, force: true do |t|
-      t.references :followable, polymorphic: true, null: false
-      t.references :follower,   polymorphic: true, null: false
+      t.references :followable, polymorphic: true, null: false, type: :uuid
+      t.references :follower,   polymorphic: true, null: false, type: :uuid
       t.boolean :blocked, default: false, null: false
       t.timestamps
     end

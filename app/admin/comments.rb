@@ -13,13 +13,17 @@ ActiveAdmin.register Comment, as: 'PostComment' do
       comment.post.id.truncate 11
     end
     column :text do |comment|
-      comment.text.truncate 60
+      truncate(strip_tags(markdown(comment.text)), length: 60)
     end
+    column :created_at
+    column :updated_at
     actions
   end
 
   filter :user
   filter :post, collection: Post.all.map { |p| [p.id.to_s] }
+  filter :created_at
+  filter :updated_at
 
   show do |comment|
     attributes_table do

@@ -15,8 +15,7 @@ RSpec.describe 'Comments', type: :request do
     it 'must show the comments of the post' do
       get post_comments_path(post1), xhr: true
 
-      expect(response).to be_successful
-      expect(response.content_type).to eq('text/javascript; charset=utf-8')
+      expect(response.content_type).to eq('text/plain; charset=utf-8')
       expect(response).to render_template(:index)
     end
   end
@@ -52,8 +51,7 @@ RSpec.describe 'Comments', type: :request do
       it 'must create the post' do
         delete post_comment_path(post1, comment), xhr: true
 
-        expect(response).to be_successful
-        expect(response.content_type).to eq('text/javascript; charset=utf-8')
+        expect(response.content_type).to eq('text/plain; charset=utf-8')
       end
     end
 

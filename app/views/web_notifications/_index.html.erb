@@ -1,0 +1,42 @@
+<div id="toast-<%= notification.id %>" class="toast ml-auto fade" role="alert" data-delay="10000">
+  <% if notification.action == 'talked' %>
+    <div class="toast-header">
+      <% if notification.actor.avatar.attached? %>
+        <%= image_tag url_for(notification.actor.avatar_thumbnail), class: 'rounded-circle m-2' %>
+      <% else %>
+        <div class="no-avatar">
+          <%= notification.actor.first_name.first + notification.actor.last_name.first %>
+        </div>
+      <% end %>
+      <strong class="mr-3 text-primary"><%= notification.actor.username %></strong>
+      <small class="text-muted"><%= notification.notifiable.created_at %></small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      <em><%= truncate(strip_tags(markdown(notification.notifiable.text)), length: 69) %></em>
+    </div>
+  <% else %>
+    <div class="toast-header">
+      <% if notification.actor.avatar.attached? %>
+        <%= image_tag url_for(notification.actor.avatar_thumbnail), class: 'rounded-circle m-2' %>
+      <% else %>
+        <div class="no-avatar">
+          <%= notification.actor.first_name.first + notification.actor.last_name.first %>
+        </div>
+      <% end %>
+      <strong class="ml-1 mr-2 text-primary"><%= notification.actor.username %></strong>
+      <span class="m-0 p-0">
+        <% if notification.action.match?(/liked|commented/) %>
+          <%= "has #{notification.action} one of your post!" %>
+        <% else %>
+          <%= "has #{notification.action} you" %>
+        <% end %>
+      </span>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+  <% end %>
+</div>

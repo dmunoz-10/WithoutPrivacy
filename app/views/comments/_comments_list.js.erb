@@ -1,13 +1,16 @@
+if($('#show-comments-count').length){
+  $('#show-comments-count').html(`<%= pluralize(@comments.count, 'Comment') %>`)
+} else {
+  $('#comments-count-<%= @comments.first.post.id %>').html(
+    `<%= j render partial: 'comments/comments_count', locals: { post: @comments.first.post } %>`
+  )
+}
+
+$('#text-area-<%= @comments.first.post.id %>').val('')
 <% unless @comments.empty? %>
-  if($('#show-comments-count').length){
-    $('#show-comments-count').html(`<%= pluralize(@comments.count, 'Comment') %>`)
-  } else {
-    $('#comments-count-<%= @comments.first.post.id %>').html(
-      `<%= j render partial: 'comments/comments_count', locals: { post: @comments.first.post } %>`
-    )
-  }
-  $('#text-area-<%= @comments.first.post.id %>').val('')
   $('#comments-list').html(`<%= j render partial: 'comments/list', locals: { comments: @comments } %>`)
 <% else %>
   $('#comments-list').html(`<p class="text-center">Empty</p>`)
 <% end %>
+
+$('[data-toggle="tooltip"]').tooltip()

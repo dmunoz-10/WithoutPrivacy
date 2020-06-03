@@ -4,6 +4,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
+  before_action :mark_seen, only: :show
 
   rescue_from ActiveRecord::RecordNotFound, with: :content_not_found
 
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
 
   def follow
     current_user.follow @user
+    NotificationManager::Notifier.call current_user, 'followed', current_user, @user
     redirect_to user_url(@user), notice: "You've followed @#{@user.username}"
   end
 
@@ -43,5 +45,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = authorize User.friendly.find(params[:id])
+  end
+
+  def mark_seen
+    @notifications = current_user.notifications.where(notifiable: @user).not_seen
+    @notifications.map(&:seen!) unless @notifications.empty?
   end
 end

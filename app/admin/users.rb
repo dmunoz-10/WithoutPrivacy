@@ -6,7 +6,9 @@ ActiveAdmin.register User do
 
   index do
     selectable_column
-    id_column
+    column :id do |user|
+      user.id.truncate 11
+    end
     column :name do |user|
       "#{user.first_name.capitalize} #{user.last_name.capitalize}"
     end
@@ -21,6 +23,7 @@ ActiveAdmin.register User do
 
   filter :first_name
   filter :last_name
+  filter :username
   filter :gender
   filter :birth_date
   filter :created_at
@@ -29,6 +32,9 @@ ActiveAdmin.register User do
   show do |user|
     attributes_table do
       row :id
+      row :avatar do
+        link_to 'Image', url_for(user.avatar), target: :blank if user.avatar.attached?
+      end
       row :first_name
       row :last_name
       row :username

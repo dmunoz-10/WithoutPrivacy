@@ -1,0 +1,43 @@
+<% notifications.each do |notification| %>
+  <li class="list-group-item" style="padding: 0; margin: 5px 10px">
+    <div class="media">
+      <% if notification.actor.avatar.attached? %>
+        <%= image_tag url_for(notification.actor.avatar_thumbnail), class: 'rounded-circle' %>
+      <% else %>
+        <div class="no-avatar">
+          <%= notification.actor.first_name.first + notification.actor.last_name.first %>
+        </div>
+      <% end %>
+      <div class="media-body ml-2">
+        <h6 class="mt-0">
+          <%= link_to user_path(notification.actor), class: 'btn m-0 p-0' do %>
+            <span class="username">
+              <%= notification.actor.username %>
+             </span>
+          <% end %>
+        </h6>
+
+        <div class="row">
+          <div class="col-10">
+            <%= link_to url_for(notification.notifiable), class: 'btn m-0 p-0 w-100 text-left' do %>
+              <% if notification.action == 'talked' %>
+                <%= truncate(strip_tags(markdown(notification.notifiable.text)), length: 100) %>
+              <% elsif notification.action.match?(/liked|commented/) %>
+                <p>has <%= notification.action %> one of your post</p>
+              <% elsif notification.action == 'mentioned' %>
+                <p>has <%= notification.action %> you</p>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="col-2">
+            <%= link_to seen_web_notification_path(notification), remote: :true, method: :put,
+                'data-toggle': 'tooltip', 'data-placement': 'top', title: 'Mark as seen',
+                style: 'color: green' do %>
+              <i class="fas fa-check"></i>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+<% end %>

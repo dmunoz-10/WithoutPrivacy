@@ -1,5 +1,5 @@
 # This migration comes from active_storage (originally 20170806125915)
-class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
+class CreateActiveStorageTables < ActiveRecord::Migration[6.0]
   def change
     create_table :active_storage_blobs do |t|
       t.string   :key,        null: false
@@ -15,7 +15,7 @@ class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
 
     create_table :active_storage_attachments do |t|
       t.string     :name,     null: false
-      t.references :record,   null: false, polymorphic: true, index: false
+      t.references :record,   null: false, polymorphic: true, index: false, type: :uuid
       t.references :blob,     null: false
 
       t.datetime :created_at, null: false

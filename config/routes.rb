@@ -22,6 +22,13 @@ Rails.application.routes.draw do
     end
   end
 
+  scope '/users' do
+    resources :web_notifications, only: :index do
+      put :seen, on: :member
+      put :mark_seen_all, on: :collection
+    end
+  end
+
   get 'explorer/posts', to: 'pages#explorer', as: 'explorer'
   resources :posts, path: '/p', except: :index do
     member do

@@ -4,6 +4,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: :users_liked
   before_action :set_post, except: %i[new create]
+  before_action :mark_seen, only: :show
 
   respond_to :js, :html, :json
 
@@ -16,6 +17,9 @@ class PostsController < ApplicationController
   def create
     @post = authorize current_user.posts.new(post_params)
     if @post.save
+      unless @post.private?
+        WebNotificationsMentionedJob.perform_later current_user, @post.description, @post
+      end
       redirect_to post_url(@post), notice: 'Post created successfully!'
     else
       flash.now[:alert] = @post.errors.full_messages.to_sentence
@@ -49,6 +53,7 @@ class PostsController < ApplicationController
       @post.unliked_by current_user
     else
       @post.liked_by current_user
+      NotificationManager::Notifier.call current_user, 'liked', @post, @post.user
     end
   end
 
@@ -63,6 +68,11 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = authorize Post.find(params[:id]), policy_class: PostPolicy
+    @post = authorize Post.find(params[:id])
+  end
+
+  def mark_seen
+    @notifications = current_user.notifications.where(notifiable: @post).not_seen
+    @notifications.map(&:seen!) unless @notifications.empty?
   end
 end

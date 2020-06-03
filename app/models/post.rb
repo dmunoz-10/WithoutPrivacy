@@ -11,6 +11,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_many :notifications, as: :notifiable
 
   has_one_attached :image
 

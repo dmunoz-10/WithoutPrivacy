@@ -1,0 +1,10 @@
+$('#modal-title-notifications').html(`<%= "Notifications (#{@notifications.size})" %>`)
+$('#WebNotificationsCount').html(`<%= @notifications.size %>`)
+
+<% unless @notifications.empty? %>
+  $('#notifications-list').html(`<%= j render partial: 'web_notifications/list', locals: { notifications: @notifications } %>`)
+<% else %>
+  $('#notifications-list').html(`<p class="text-center">Empty</p>`)
+<% end %>
+
+$('[data-toggle="tooltip"]').tooltip()

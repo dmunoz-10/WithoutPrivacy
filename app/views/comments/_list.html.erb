@@ -20,7 +20,8 @@
           <% end %>
           <% if user_signed_in? && comment.user == @current_user %>
             <%= link_to post_comment_path(comment.post, comment), method: :delete, remote: :true, class: 'btn',
-                        style: 'float: right', data: { confirm: 'Are you sure?' } do %>
+                        style: 'float: right', data: { confirm: 'Are you sure?' }, 'data-toggle': 'tooltip',
+                        'data-placement': 'top', title: 'Delete comment' do %>
               <span>
                 <i class="fas fa-trash-alt remove"></i>
               </span>

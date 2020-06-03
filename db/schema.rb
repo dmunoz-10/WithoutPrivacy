@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_211444) do
+ActiveRecord::Schema.define(version: 2020_05_29_200045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
+    t.uuid "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
@@ -69,19 +69,20 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
   end
 
   create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "post_id", null: false
-    t.bigint "user_id", null: false
+    t.uuid "post_id", null: false
+    t.uuid "user_id", null: false
     t.text "text", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "follows", force: :cascade do |t|
     t.string "followable_type", null: false
-    t.bigint "followable_id", null: false
+    t.uuid "followable_id", null: false
     t.string "follower_type", null: false
-    t.bigint "follower_id", null: false
+    t.uuid "follower_id", null: false
     t.boolean "blocked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -93,7 +94,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
-    t.integer "sluggable_id", null: false
+    t.string "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
     t.string "scope"
     t.datetime "created_at"
@@ -102,8 +103,20 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "recipient_id"
+    t.string "actor_id"
+    t.datetime "seen_at"
+    t.string "action"
+    t.string "notifiable_type"
+    t.uuid "notifiable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
+  end
+
   create_table "posts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.uuid "user_id", null: false
     t.string "description"
     t.boolean "private"
     t.datetime "created_at", precision: 6, null: false
@@ -111,7 +124,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -139,9 +152,9 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
 
   create_table "votes", force: :cascade do |t|
     t.string "votable_type"
-    t.bigint "votable_id"
+    t.uuid "votable_id"
     t.string "voter_type"
-    t.bigint "voter_id"
+    t.uuid "voter_id"
     t.boolean "vote_flag"
     t.string "vote_scope"
     t.integer "vote_weight"
@@ -154,6 +167,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_211444) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"
 end
