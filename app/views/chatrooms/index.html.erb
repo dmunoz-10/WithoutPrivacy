@@ -1,0 +1,49 @@
+<% content_for :title, @user.username %>
+
+<div class="row">
+  <div class="col-12 col-md-10 offset-md-1">
+    <div class="card w-100">
+      <div class="card-header text-center" style="height: 10vh;">
+        <% if @user.avatar.attached? %>
+          <%= image_tag @user.avatar_thumbnail, class: 'rounded-circle', size: '40x40' %>
+        <% else %>
+          <div class="no-avatar">
+            <%= @user.first_name.first + @user.last_name.first %>
+          </div>
+        <% end %>
+        <span data-username="<%= @user.username %>" id="chat-username">
+          <%= "#{@user.first_name} #{@user.last_name} (@#{@user.username})" %>
+        </span>
+      </div>
+      <div class="card-body overflow-auto" style="height: 67vh;" id="messages">
+        <% unless @pagy.next.nil? %>
+          <div id="div_next_link" class="d-none">
+            <%== pagy_next_link(@pagy, '', 'id="next_link"') %>
+          </div>
+        <% end %>
+        <%= render partial: 'messages/message', collection: @messages, as: :message %>
+      </div>
+      <div class="card-footer p-0" style="height: 10vh;">
+        <% unless @user.blocked? current_user %>
+          <%= form_with model: @message, remote: true do |f| %>
+            <%= f.hidden_field :chat_room_id %>
+            <div class="d-flex justify-content-around align-items-center">
+              <div class="w-100">
+                <%= f.text_area :text,
+                                class: 'form-control',
+                                size: '60x2',
+                                required: true,
+                                style:'resize: none' %>
+              </div>
+              <div class="m-2">
+                <%= f.submit 'Send', class: 'btn btn-success' %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'chatrooms/pagination', 'data-turbolinks-track': 'reload' %>

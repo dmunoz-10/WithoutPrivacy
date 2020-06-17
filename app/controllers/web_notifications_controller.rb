@@ -12,13 +12,13 @@ class WebNotificationsController < ApplicationController
 
   def seen
     @notification.seen!
-    @notifications = current_user.notifications.not_seen.order(created_at: :desc)
+    @notifications = current_user.notifications.not_seen
     render file: 'web_notifications/_notifications_list.js.erb'
   end
 
   def mark_seen_all
     @notifications.map(&:seen!)
-    @notifications = current_user.notifications.not_seen.order(created_at: :desc)
+    @notifications = current_user.notifications.not_seen
     render file: 'web_notifications/_notifications_list.js.erb'
   end
 
@@ -29,6 +29,6 @@ class WebNotificationsController < ApplicationController
   end
 
   def set_notification_not_seen
-    @notifications = current_user.notifications.not_seen.order(created_at: :desc)
+    @notifications = current_user.notifications.not_seen
   end
 end

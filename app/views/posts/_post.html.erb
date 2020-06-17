@@ -44,7 +44,9 @@
         <div id="like-link-<%= post.id %>">
           <%= render 'posts/like_link', post: post %>
         </div>
-        <span class="add-comment btn" data-id="<%= post.id %>">
+        <span class="btn"
+              onclick="$(`#text-area-<%= post.id %>`).val('')
+                       $(`#add-comment-<%= post.id %>`).toggle('fast')">
           <i class="fas fa-comment-dots"></i>
         </span>
       </div>

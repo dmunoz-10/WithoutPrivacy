@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Comment Model
 class Comment < ApplicationRecord
   acts_as_votable
 

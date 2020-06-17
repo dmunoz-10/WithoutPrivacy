@@ -20,3 +20,9 @@
   user-select: none;
   text-transform: uppercase;
 }
+
+.remove {
+  &:hover {
+    color: red;
+  }
+}

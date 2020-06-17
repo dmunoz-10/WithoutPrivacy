@@ -1,4 +1,5 @@
 <%= javascript_pack_tag 'users/show', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'pages/pagination', 'data-turbolinks-track': 'reload' %>
 
 <% content_for :title, @user.username %>
 
@@ -71,7 +72,9 @@
                   <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
                 <% end %>
 
-                <%# link_to 'Message', '#', class: 'btn btn-outline-secondary' %>
+                <% if !@user.blocked?(current_user) && !current_user.blocked?(@user) %>
+                  <%= link_to 'Message', chat_user_path(@user), class: 'btn btn-outline-secondary' %>
+                <% end %>
 
                 <% if policy(@user).unblock? %>
                   <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
@@ -86,7 +89,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-lg-8">
+  <div class="col-12 col-lg-8" id="posts">
     <% if @user == current_user %>
       <div class="text-center mb-4">
         <%= link_to '+', new_post_path, class: 'btn btn-primary border rounded-circle',
@@ -95,7 +98,7 @@
     <% end %>
     <% unless @user.blocked? current_user %>
       <% if @user.posts.count > 0 %>
-        <%= render partial: 'posts/show', locals: { posts: @user.posts.order(created_at: :desc) } %>
+        <%= render partial: 'posts/show', locals: { posts: @posts } %>
       <% else %>
         <h2 class="text-center">No posts</h2>
       <% end %>
@@ -105,6 +108,12 @@
       </h2>
     <% end %>
   </div>
+
+  <% unless @pagy.next.nil? %>
+    <div id="div_next_link" class="d-none">
+      <%== pagy_next_link(@pagy, '', 'id="next_link"') %>
+    </div>
+  <% end %>
 </div>
 
 <div class="modal fade" id="modal-follows" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">

@@ -1,0 +1,5 @@
+<% if message.user == current_user %>
+  <%= render partial: 'messages/message_current_user', locals: { message: message } %>
+<% else %>
+  <%= render partial: 'messages/message_other_user', locals: { message: message } %>
+<% end %>

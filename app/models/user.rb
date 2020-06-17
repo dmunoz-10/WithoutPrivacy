@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :notifications, foreign_key: :recipient_id
+  has_many :messages, dependent: :destroy
 
   def avatar_thumbnail
     avatar.variant(resize_to_fill: [40, 40])

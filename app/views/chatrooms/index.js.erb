@@ -1,0 +1,7 @@
+$('#div_next_link').after(`<%= j render partial: 'messages/message', collection: @messages, as: :message %>`)
+
+<% if @pagy.next.nil? %>
+  $('#div_next_link').remove()
+<% else %>
+  $('#div_next_link').html(`<%== pagy_next_link(@pagy, 'More', 'id="next_link" class="btn btn-primary"') %>`)
+<% end %>

@@ -1,14 +1,13 @@
 if($('#show-comments-count').length){
   $('#show-comments-count').html(`<%= pluralize(@comments.count, 'Comment') %>`)
-} else {
+}
+
+<% unless @comments.empty? %>
+  $('#comments-list').html(`<%= j render partial: 'comments/list', locals: { comments: @comments } %>`)
   $('#comments-count-<%= @comments.first.post.id %>').html(
     `<%= j render partial: 'comments/comments_count', locals: { post: @comments.first.post } %>`
   )
-}
-
-$('#text-area-<%= @comments.first.post.id %>').val('')
-<% unless @comments.empty? %>
-  $('#comments-list').html(`<%= j render partial: 'comments/list', locals: { comments: @comments } %>`)
+  $('#text-area-<%= @comments.first.post.id %>').val('')
 <% else %>
   $('#comments-list').html(`<p class="text-center">Empty</p>`)
 <% end %>

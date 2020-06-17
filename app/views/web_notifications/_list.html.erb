@@ -19,7 +19,8 @@
 
         <div class="row">
           <div class="col-10">
-            <%= link_to url_for(notification.notifiable), class: 'btn m-0 p-0 w-100 text-left' do %>
+            <% url_for_notification = notification.notifiable_type == 'Message' ? chat_user_path(notification.actor) : url_for(notification.notifiable) %>
+            <%= link_to url_for_notification, class: 'btn m-0 p-0 w-100 text-left' do %>
               <% if notification.action == 'talked' %>
                 <%= truncate(strip_tags(markdown(notification.notifiable.text)), length: 100) %>
               <% elsif notification.action.match?(/liked|commented/) %>

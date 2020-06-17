@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get :unblock
       get :followers
       get :followings
+      get :chat, to: 'chatrooms#index', as: 'chat'
     end
   end
 
@@ -38,4 +39,6 @@ Rails.application.routes.draw do
 
     resources :comments, only: %i[index create destroy]
   end
+
+  resources :messages, only: %i[create destroy]
 end

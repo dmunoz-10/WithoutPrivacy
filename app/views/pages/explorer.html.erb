@@ -1,7 +1,9 @@
+<%= javascript_pack_tag 'pages/pagination', 'data-turbolinks-track': 'reload' %>
+
 <% content_for :title, 'Explorer' %>
 
 <div class="row">
-  <div class="col-12 col-lg-8 mb-4">
+  <div class="col-12 col-lg-8 mb-4" id="posts">
     <% if @posts.size > 0 %>
       <%= render partial: 'posts/show', locals: { posts: @posts } %>
     <% else %>
@@ -16,4 +18,10 @@
       <p>Soon</p>
     </div>
   </div>
+
+  <% unless @pagy.next.nil? %>
+    <div id="div_next_link" class="d-none">
+      <%== pagy_next_link(@pagy, '', 'id="next_link"') %>
+    </div>
+  <% end %>
 </div>

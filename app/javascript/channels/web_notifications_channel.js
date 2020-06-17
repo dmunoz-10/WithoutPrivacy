@@ -10,8 +10,11 @@ consumer.subscriptions.create("WebNotificationsChannel", {
   },
 
   received(data) {
-    $('#WebNotifications').prepend(data.html)
-    $('#WebNotificationsCount').html(data.count)
-    $(`#toast-${data.id}`).toast('show')
+    if (data.action == 'talked' && $('#messages').length) {
+    } else {
+      $('#WebNotifications').prepend(data.html)
+      $('#WebNotificationsCount').html(data.count)
+      $(`#toast-${data.id}`).toast('show')
+    }
   }
 });
