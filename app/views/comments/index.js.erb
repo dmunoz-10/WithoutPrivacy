@@ -1,5 +1,9 @@
-$('#modal-title-comments').html(`<%= "Comments (#{@comments.size})" %>`)
+<% if @modal %>
+  $('#modal-title-comments').html(`<%= "Comments (#{@post.comments.count})" %>`)
+<% end %>
 
 <%= render 'comments/comments_list' %>
 
-$('#modal-comments').modal('show')
+<% if @modal %>
+  $('#modal-comments').modal('show')
+<% end %>

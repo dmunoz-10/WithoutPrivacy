@@ -1,35 +1,43 @@
-<% comments.each do |comment| %>
-  <li class="list-group-item" style="padding: 0; margin: 5px 10px">
-    <div class="media">
-      <% if comment.user.avatar.attached? %>
-        <%= image_tag comment.user.avatar_thumbnail, class: 'border rounded-circle' %>
-      <% else %>
-        <div class="no-avatar">
-          <%= comment.user.first_name.first + comment.user.last_name.first %>
+<li class="list-group-item" id="comment-<%= comment.id %>" style="padding: 0; margin: 5px 10px">
+  <div class="media">
+    <% if comment.user.avatar.attached? %>
+      <%= image_tag comment.user.avatar_thumbnail, class: 'border rounded-circle' %>
+    <% else %>
+      <div class="no-avatar">
+        <%= comment.user.first_name.first + comment.user.last_name.first %>
+      </div>
+    <% end %>
+    <div class="media-body ml-2">
+      <h6 class="mt-0">
+        <%= link_to user_path(comment.user) do %>
+          <span class="username">
+            <%= comment.user.username %>
+            <span class="text-muted btn" style="font-size: 12px; padding: 0; margin: 0; vertical-align: top">
+              - <%= time_ago_in_words(comment.created_at).capitalize + ' ago' %>
+            </span>
+          </span>
+        <% end %>
+        <% if user_signed_in? && comment.user == @current_user %>
+          <%= link_to post_comment_path(comment.post, comment), method: :delete, remote: :true, class: 'btn',
+                      style: 'float: right', data: { confirm: 'Are you sure?' }, 'data-toggle': 'tooltip',
+                      'data-placement': 'top', title: 'Delete comment' do %>
+            <span>
+              <i class="fas fa-trash-alt remove"></i>
+            </span>
+          <% end %>
+        <% end %>
+      </h6>
+      <%= markdown comment.text %>
+
+      <div class="mb-2 inline-block">
+        <div id="like-comment-<%= comment.id %>" style="display: contents;">
+          <%= render partial: 'comments/like_button', locals: { comment: comment, current_user: @current_user } %>
         </div>
-      <% end %>
-      <div class="media-body ml-2">
-        <h6 class="mt-0">
-          <%= link_to user_path(comment.user) do %>
-            <span class="username">
-              <%= comment.user.username %>
-              <span class="text-muted btn" style="font-size: 12px; padding: 0; margin: 0; vertical-align: top">
-                 - <%= time_ago_in_words(comment.created_at).capitalize %>
-               </span>
-             </span>
-          <% end %>
-          <% if user_signed_in? && comment.user == @current_user %>
-            <%= link_to post_comment_path(comment.post, comment), method: :delete, remote: :true, class: 'btn',
-                        style: 'float: right', data: { confirm: 'Are you sure?' }, 'data-toggle': 'tooltip',
-                        'data-placement': 'top', title: 'Delete comment' do %>
-              <span>
-                <i class="fas fa-trash-alt remove"></i>
-              </span>
-            <% end %>
-          <% end %>
-        </h6>
-        <%= markdown comment.text %>
+
+        <div id="likes-count-comment-<%= comment.id %>" style="display: contents;">
+          <%= render partial: 'comments/likes', locals: { comment: comment, current_user: @current_user } %>
+        </div>
       </div>
     </div>
-  </li>
-<% end %>
+  </div>
+</li>

@@ -18,4 +18,12 @@ class CommentPolicy < ApplicationPolicy
   def destroy?
     record.user == user
   end
+
+  def like?
+    !record.post.user.blocked?(user) && !record.user.blocked?(user)
+  end
+
+  def users_liked?
+    record.user == user
+  end
 end

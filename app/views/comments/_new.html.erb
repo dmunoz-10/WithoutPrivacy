@@ -1,0 +1,14 @@
+<%= form_with url: post_comments_path(post).concat('?append=1') do |f| %>
+  <div class="d-flex justify-content-around align-items-center">
+    <div class="w-100 m-2">
+      <%= f.text_area :text,
+                      class: 'form-control',
+                      id:"text-area-#{post.id}",
+                      size: '60x2',
+                      style:'resize: none' %>
+    </div>
+    <div class="m-2">
+      <%= f.submit 'Send', class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

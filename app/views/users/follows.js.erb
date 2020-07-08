@@ -1,9 +1,21 @@
-$('#modal-title-follows').html(`<%= "#{action_name.capitalize} (#{@users.size})" %>`)
+$('#modal-title-follows').html(`<%= "#{action_name.capitalize} (#{@count})" %>`)
 
 <% unless @users.empty? %>
-  $('#follows-list').html(`<%= j render 'users/list' %>`)
+  <% if @pagy.prev.nil? %>
+    $('#follows-list').html(`<%= j render 'users/list' %>`)
+  <% else %>
+    $('#follows-list').append(`<%= j render 'users/list' %>`)
+  <% end %>
 <% else %>
   $('#follows-list').html(`<p class="text-center">Empty</p>`)
+<% end %>
+
+<% if @pagy.next.nil? %>
+  $('#next_link_users').remove()
+<% else %>
+  $('#div_next_link_users').html(
+    `<%== pagy_next_link(@pagy, 'More', 'id="next_link_users", class="btn btn-primary"') %>`
+  )
 <% end %>
 
 $('#modal-follows').modal('show')

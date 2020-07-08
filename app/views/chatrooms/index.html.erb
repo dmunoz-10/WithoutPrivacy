@@ -11,18 +11,22 @@
             <%= @user.first_name.first + @user.last_name.first %>
           </div>
         <% end %>
-        <span data-username="<%= @user.username %>" id="chat-username">
+
+        <%= link_to user_path(@user), class: 'btn m-0 p-0', id: 'chat-username', 'data-username': @user.username do %>
           <%= "#{@user.first_name} #{@user.last_name} (@#{@user.username})" %>
-        </span>
+        <% end %>
       </div>
+
       <div class="card-body overflow-auto" style="height: 67vh;" id="messages">
         <% unless @pagy.next.nil? %>
           <div id="div_next_link" class="d-none">
             <%== pagy_next_link(@pagy, '', 'id="next_link"') %>
           </div>
         <% end %>
-        <%= render partial: 'messages/message', collection: @messages, as: :message %>
+
+        <%= render partial: 'messages/message', collection: @messages.reverse, as: :message %>
       </div>
+
       <div class="card-footer p-0" style="height: 10vh;">
         <% unless @user.blocked? current_user %>
           <%= form_with model: @message, remote: true do |f| %>

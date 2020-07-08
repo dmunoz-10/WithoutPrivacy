@@ -1,0 +1,5 @@
+$('#comment-<%= @comment.id %>').remove()
+
+$('#modal-title-comments').html(`<%= "Comments (#{@post.comments.count})" %>`)
+
+<%= render 'comments/comments_count' %>

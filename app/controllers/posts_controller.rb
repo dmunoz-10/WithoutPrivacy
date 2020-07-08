@@ -27,7 +27,9 @@ class PostsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @pagy, @comments = pagy(@post.comments, items: 12, link_extra: 'data-remote="true"')
+  end
 
   def edit; end
 
@@ -58,7 +60,7 @@ class PostsController < ApplicationController
   end
 
   def users_liked
-    @users = @post.votes_for.up.by_type(User).voters
+    @pagy, @users = pagy(@post.voters, link_extra: 'data-remote="true"')
   end
 
   private

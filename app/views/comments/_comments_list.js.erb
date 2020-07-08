@@ -1,15 +1,20 @@
-if($('#show-comments-count').length){
-  $('#show-comments-count').html(`<%= pluralize(@comments.count, 'Comment') %>`)
-}
-
 <% unless @comments.empty? %>
-  $('#comments-list').html(`<%= j render partial: 'comments/list', locals: { comments: @comments } %>`)
-  $('#comments-count-<%= @comments.first.post.id %>').html(
-    `<%= j render partial: 'comments/comments_count', locals: { post: @comments.first.post } %>`
-  )
-  $('#text-area-<%= @comments.first.post.id %>').val('')
+  <% if @pagy.prev.nil? %>
+    $('#comments-list').html(`<%= j render partial: 'comments/list', collection: @comments, as: :comment %>`)
+  <% else %>
+    $('#comments-list').append(`<%= j render partial: 'comments/list', collection: @comments, as: :comment %>`)
+  <% end %>
+  <%= render 'comments/comments_count' %>
 <% else %>
   $('#comments-list').html(`<p class="text-center">Empty</p>`)
+<% end %>
+
+<% if @pagy.next.nil? %>
+  $('#next_link_comments').remove()
+<% else %>
+  $('#div_next_link_comments').html(
+    `<%== pagy_next_link(@pagy, 'More', 'id="next_link_comments" class="btn btn-primary"') %>`
+  )
 <% end %>
 
 $('[data-toggle="tooltip"]').tooltip()

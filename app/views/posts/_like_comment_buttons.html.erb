@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-6 text-center">
+    <div id="likes-count-<%= post.id %>">
+      <%= render 'posts/likes', post: post %>
+    </div>
+  </div>
+  <div class="col-6 text-center" id="show-comments-count">
+    <span><%= pluralize(post.comments.count, 'Comment') %></span>
+  </div>
+  <div class="col-6 text-center">
+    <div id="like-link-<%= post.id %>">
+      <%= render 'posts/like_link', post: post %>
+    </div>
+  </div>
+  <div class="col-6 text-center">
+    <i class="fas fa-comment-dots"></i>
+  </div>
+</div>

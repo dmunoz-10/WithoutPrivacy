@@ -12,6 +12,7 @@ class Post < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
   has_many :notifications, as: :notifiable
+  has_many :voters, through: :votes_for, source_type: 'User'
 
   has_one_attached :image
 

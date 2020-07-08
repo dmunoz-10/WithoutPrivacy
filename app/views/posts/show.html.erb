@@ -38,56 +38,18 @@
             <% end %>
 
             <p class="card-text">
-              <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
+              <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize + ' ago' %></small>
             </p>
 
-            <% if @post.user == current_user %>
-              <div class="d-flex justify-content-end my-3">
-                <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-success mr-2' %>
-                <%= link_to 'Delete', post_path(@post), method: :delete,
-                            data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
-              </div>
-            <% end %>
+            <%= render partial: 'posts/edit_delete_buttons', locals: { post: @post } %>
 
-            <div class="row">
-              <div class="col-6 text-center">
-                <div id="likes-count-<%= @post.id %>">
-                  <%= render 'posts/likes', post: @post %>
-                </div>
-              </div>
-              <div class="col-6 text-center" id="show-comments-count">
-                <span><%= pluralize(@post.comments.count, 'Comment') %></span>
-              </div>
-              <div class="col-6 text-center">
-                <div id="like-link-<%= @post.id %>">
-                  <%= render 'posts/like_link', post: @post %>
-                </div>
-              </div>
-              <div class="col-6 text-center">
-                <i class="fas fa-comment-dots"></i>
-              </div>
-            </div>
+            <%= render partial: 'posts/like_comment_buttons', locals: { post: @post } %>
 
             <div class="mt-3">
-              <ul class="list-group list-group-flush" id="comments-list">
-                <%= render partial: 'comments/list', locals: { comments: @post.comments } %>
-              </ul>
+              <%= render partial: 'comments/index', locals: { post: @post, comments: @comments, pagy: @pagy } %>
             </div>
 
-            <%= form_with url: post_comments_path(@post) do |f| %>
-              <div class="d-flex justify-content-around align-items-center">
-                <div class="w-100 m-2">
-                  <%= f.text_area :text,
-                                  class: 'form-control',
-                                  id:"text-area-#{@post.id}",
-                                  size: '60x2',
-                                  style:'resize: none' %>
-                </div>
-                <div class="m-2">
-                  <%= f.submit 'Send', class: 'btn btn-success' %>
-                </div>
-              </div>
-            <% end %>
+            <%= render partial: 'comments/new', locals: { post: @post } %>
           </div>
         </div>
       </div>
@@ -106,58 +68,22 @@
         <% end %>
         <span class="username"><%= @post.user.username %></span>
       <% end %>
+
       <%= markdown @post.description %>
+
       <p class="card-text">
-        <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize %></small>
+        <small class="text-muted"><%= time_ago_in_words(@post.created_at).capitalize + ' ago' %></small>
       </p>
 
-      <% if policy(@post).edit? && policy(@post).destroy? %>
-        <div class="d-flex justify-content-end my-3">
-          <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-success mr-2' %>
-          <%= link_to 'Delete', post_path(@post), method: :delete,
-                      data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
-        </div>
-      <% end %>
+      <%= render partial: 'posts/edit_delete_buttons', locals: { post: @post } %>
 
-      <div class="row">
-        <div class="col-6 text-center">
-          <div id="likes-count-<%= @post.id %>">
-            <%= render 'posts/likes', post: @post %>
-          </div>
-        </div>
-        <div class="col-6 text-center" id="show-comments-count">
-          <span><%= pluralize(@post.comments.count, 'Comment') %></span>
-        </div>
-        <div class="col-6 text-center">
-          <div id="like-link-<%= @post.id %>">
-            <%= render 'posts/like_link', post: @post %>
-          </div>
-        </div>
-        <div class="col-6 text-center">
-          <i class="fas fa-comment-dots"></i>
-        </div>
-      </div>
+      <%= render partial: 'posts/like_comment_buttons', locals: { post: @post } %>
 
       <div class="my-3">
-        <ul class="list-group list-group-flush" id="comments-list">
-          <%= render partial: 'comments/list', locals: { comments: @post.comments } %>
-        </ul>
+        <%= render partial: 'comments/index', locals: { post: @post, comments: @comments, pagy: @pagy } %>
       </div>
 
-      <%= form_with url: post_comments_path(@post) do |f| %>
-        <div class="d-flex justify-content-around align-items-center">
-          <div class="w-100 m-2">
-            <%= f.text_area :text,
-                            class: 'form-control',
-                            id:"text-area-#{@post.id}",
-                            size: '60x2',
-                            style:'resize: none' %>
-          </div>
-          <div class="m-2">
-            <%= f.submit 'Send', class: 'btn btn-success' %>
-          </div>
-        </div>
-      <% end %>
+      <%= render partial: 'comments/new', locals: { post: @post } %>
     </div>
   </div>
 <% end %>

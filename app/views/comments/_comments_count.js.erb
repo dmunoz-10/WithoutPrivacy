@@ -1,0 +1,11 @@
+if ($('#show-comments-count').length) {
+  $('#show-comments-count').html(`<%= pluralize(@post.comments.count, 'Comment') %>`)
+} else {
+  $('#comments-count-<%= @post.id %>').html(
+    `
+      <%= link_to post_comments_path(@post), remote: :true, class: 'btn', style: 'padding: 0' do %>
+        <%= pluralize(@post.comments.count, 'Comment') %>
+      <% end %>
+    `
+  )
+}

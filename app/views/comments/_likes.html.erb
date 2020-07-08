@@ -1,0 +1,7 @@
+<% if comment.user == current_user %>
+  <%= link_to users_liked_post_comment_path(comment.post, comment), remote: :true, class: 'btn mb-1 p-0' do %>
+    <%= comment.get_upvotes.size %>
+  <% end %>
+<% else %>
+  <%= comment.get_upvotes.size %>
+<% end %>

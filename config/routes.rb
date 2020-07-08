@@ -37,7 +37,12 @@ Rails.application.routes.draw do
       get :users_liked
     end
 
-    resources :comments, only: %i[index create destroy]
+    resources :comments, only: %i[index create destroy] do
+      member do
+        put :like
+        get :users_liked
+      end
+    end
   end
 
   resources :messages, only: %i[create destroy]

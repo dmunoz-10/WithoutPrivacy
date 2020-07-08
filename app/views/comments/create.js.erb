@@ -1,0 +1,6 @@
+<% if @append %>
+  $('#comments-list').append(`<%= j render partial: 'comments/list', locals: { comment: @comment } %>`)
+<% end %>
+
+<%= render 'comments/comments_count' %>
+$('#text-area-<%= @post.id %>').val('')

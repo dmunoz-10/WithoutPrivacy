@@ -22,9 +22,11 @@
             <% url_for_notification = notification.notifiable_type == 'Message' ? chat_user_path(notification.actor) : url_for(notification.notifiable) %>
             <%= link_to url_for_notification, class: 'btn m-0 p-0 w-100 text-left' do %>
               <% if notification.action == 'talked' %>
-                <%= truncate(strip_tags(markdown(notification.notifiable.text)), length: 100) %>
+                <p>
+                  <%= 'Said: ' + truncate(strip_tags(markdown(notification.notifiable.text)), length: 100) %>
+                </p>
               <% elsif notification.action.match?(/liked|commented/) %>
-                <p>has <%= notification.action %> one of your post</p>
+                <p><%= "has #{notification.action} one of your #{notification.notifiable_type.downcase}" %></p>
               <% elsif notification.action == 'mentioned' %>
                 <p>has <%= notification.action %> you</p>
               <% end %>

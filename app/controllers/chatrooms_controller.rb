@@ -9,7 +9,7 @@ class ChatroomsController < ApplicationController
   def index
     @message = @chatroom.messages.new
     @pagy, @messages = pagy(@chatroom.messages
-                                     .order(:created_at), link_extra: 'data-remote="true"')
+                                     .order(created_at: :desc), link_extra: 'data-remote="true"')
 
     respond_to do |format|
       format.html

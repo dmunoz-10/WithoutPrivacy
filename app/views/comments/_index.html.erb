@@ -1,0 +1,10 @@
+<ul class="list-group list-group-flush" id="comments-list">
+  <%= render partial: 'comments/list', collection: comments, as: :comment %>
+</ul>
+
+<div class="div_next_link_comments text-center mt-3">
+  <% unless pagy.next.nil? %>
+    <%= link_to 'More', "/p/#{post.id}/comments?page=2&modal=0", id: 'next_link_comments',
+                        class: 'btn btn-primary', remote: :true %>
+  <% end %>
+</div>

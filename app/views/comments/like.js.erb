@@ -1,0 +1,7 @@
+$(`#like-comment-<%= @comment.id %>`).html(
+  `<%= j render partial: 'comments/like_button', locals: { comment: @comment, current_user: current_user } %>`
+)
+
+$('#likes-count-comment-<%= @comment.id %>').html(
+  `<%= j render partial: 'comments/likes', locals: { comment: @comment, current_user: @current_user } %>`
+)

@@ -12,6 +12,10 @@ class PagesController < ApplicationController
                                .or(Post.where(user: current_user))
                                .order(created_at: :desc),
                            items: 9, link_extra: 'data-remote="true"')
+      @chats = ChatRoom.where(user1: current_user)
+                       .or(ChatRoom.where(user2: current_user)).map do |chatroom|
+                         chatroom.user1 == current_user ? chatroom.user2 : chatroom.user1
+                       end.uniq
     end
 
     respond_to do |format|
@@ -25,6 +29,8 @@ class PagesController < ApplicationController
                              .where(private: false)
                              .order(created_at: :desc),
                          items: 9, link_extra: 'data-remote="true"')
+    @users = @posts.map(&:user).uniq
+
     respond_to do |format|
       format.html
       format.js { render 'pagination' }

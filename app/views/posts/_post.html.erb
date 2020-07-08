@@ -19,14 +19,15 @@
         <% end %>
       </div>
     </div>
-    <%= link_to post_path(post), class: 'btn text-left', style: 'padding: 0' do %>
+    <%= content_tag :div, onclick: "window.location.href = '#{post_path(post)}'",
+                          class: 'btn text-left', style: 'padding: 0' do %>
       <%= image_tag post.image, class: 'card-img' if post.image.attached? %>
       <div class="card-body" style="padding: 15px 15px 0">
         <% if post.description.present? %>
           <%= markdown post.description %>
         <% end %>
         <p class="card-text">
-          <small class="text-muted"><%= time_ago_in_words(post.created_at).capitalize %></small>
+          <small class="text-muted"><%= time_ago_in_words(post.created_at).capitalize + ' ago' %></small>
         </p>
       </div>
     <% end %>
@@ -36,7 +37,9 @@
       </div>
 
       <div id="comments-count-<%= post.id %>">
-        <%= render 'comments/comments_count', post: post %>
+        <%= link_to post_comments_path(post), remote: :true, class: 'btn', style: 'padding: 0' do %>
+          <%= pluralize(post.comments.count, 'Comment') %>
+        <% end %>
       </div>
     </div>
     <% if user_signed_in? %>

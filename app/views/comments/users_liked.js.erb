@@ -1,5 +1,7 @@
-$('#modal-title-users-liked').html(`<%= "Users (#{@post.get_upvotes.size})" %>`)
-$('#likes-count-<%= @post.id %>').html(`<%= j render partial: 'posts/likes', locals: { post: @post } %>`)
+$('#modal-title-users-liked').html(`<%= "Users (#{@comment.get_upvotes.size})" %>`)
+$('#likes-count-comment-<%= @comment.id %>').html(
+  `<%= j render partial: 'comments/likes', locals: { comment: @comment, current_user: current_user } %>`
+)
 
 <% unless @users.empty? %>
   <% if @pagy.prev.nil? %>

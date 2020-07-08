@@ -40,12 +40,14 @@ class UsersController < ApplicationController
   end
 
   def followers
-    @users = @user.followers
+    @pagy, @users = pagy(@user.user_followers, link_extra: 'data-remote="true"')
+    @count = @user.followers_count
     render :follows
   end
 
   def followings
-    @users = @user.all_following
+    @pagy, @users = pagy(@user.following_users, link_extra: 'data-remote="true"')
+    @count = @user.following_users_count
     render :follows
   end
 

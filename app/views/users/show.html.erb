@@ -41,6 +41,9 @@
             <div class="col-12">
               <i class="fas fa-envelope"></i> <%= @user.email %>
             </div>
+            <div class="col-12">
+              <i class="far fa-calendar-alt"></i> Joined <%= l @user.created_at.to_date, format: :long %> 
+            </div>
 
             <div class="col-12 d-flex justify-content-between mt-2 mb-4">
               <span><%= @user.posts.count %> posts</span>
@@ -91,11 +94,9 @@
 
   <div class="col-12 col-lg-8" id="posts">
     <% if @user == current_user %>
-      <div class="text-center mb-4">
-        <%= link_to '+', new_post_path, class: 'btn btn-primary border rounded-circle',
-                    title: 'Create a new post' %>
-      </div>
+      <%= render partial: 'posts/new_button' %>
     <% end %>
+
     <% unless @user.blocked? current_user %>
       <% if @user.posts.count > 0 %>
         <%= render partial: 'posts/show', locals: { posts: @posts } %>
@@ -126,8 +127,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <ul class="list-group list-group-flush" id="follows-list">
-        </ul>
+        <ul class="list-group list-group-flush" id="follows-list"></ul>
+        <div class="text-center mt-3" id="div_next_link_users"></div>
       </div>
     </div>
   </div>
