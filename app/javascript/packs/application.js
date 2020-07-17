@@ -10,14 +10,12 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-import $ from 'jquery';
-import 'bootstrap/dist/js/bootstrap';
+// import $ from 'jquery';
+// import 'bootstrap/dist/js/bootstrap';
 
 document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip()
   $('[data-toggle="popover"]').popover()
-  const messages = document.getElementById('messages')
-  if (messages) { messages.scrollTop = messages.scrollHeight }
 })
 
 // Uncomment to copy all static images under ../images to the output folder and reference

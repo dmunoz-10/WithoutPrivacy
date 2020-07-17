@@ -1,5 +1,5 @@
 <div class="w-100 d-flex justify-content-end m-1">
-  <div class="border rounded p-2 list-group-item-info text-dark" id="message-<%= message.id %>" style="max-width: 70%">
+  <div class="border p-2 list-group-item-info text-dark" id="message-<%= message.id %>" style="max-width: 70%; border-radius: 14px 14px 0 14px;">
     <div class="d-flex justify-content-between">
       <%= message.deleted_at ? raw('<p><i class="fas fa-ban"></i> This message was deleted</p>') : markdown(message.text) %>
       <% if message.deleted_at.nil? && Time.at(Time.now - message.created_at).utc.hour < 1 %>

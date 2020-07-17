@@ -29,6 +29,8 @@
                 <p><%= "has #{notification.action} one of your #{notification.notifiable_type.downcase}" %></p>
               <% elsif notification.action == 'mentioned' %>
                 <p>has <%= notification.action %> you</p>
+              <% elsif notification.action == 'followed' %>
+                <p>has followed you!</p>
               <% end %>
             <% end %>
           </div>

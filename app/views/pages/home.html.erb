@@ -13,22 +13,26 @@
         <div class="card my-3">
           <li class="list-group-item"><h3>Chats</h3></li>
 
-          <% @chats.each do |user| %>
-            <li class="list-group-item">
-              <div class="media">
-                <% if user.avatar.attached? %>
-                  <%= image_tag user.avatar_thumbnail, class: 'border rounded-circle' %>
-                <% else %>
-                  <div class="no-avatar">
-                    <%= user.first_name.first + user.last_name.first %>
-                  </div>
-                <% end %>
+          <% if @chats.empty? %>
+            <p class="text-center mt-2">Start a conversation with someone!</p>
+          <% else %>
+            <% @chats.each do |user| %>
+              <li class="list-group-item">
+                <div class="media">
+                  <% if user.avatar.attached? %>
+                    <%= image_tag user.avatar_thumbnail, class: 'border rounded-circle' %>
+                  <% else %>
+                    <div class="no-avatar">
+                      <%= user.first_name.first + user.last_name.first %>
+                    </div>
+                  <% end %>
 
-                <%= link_to chat_user_path(user), class: 'btn' do %>
-                  <span class="username"><%= user.username %></span>
-                <% end %>
-              </div>
-            </li>
+                  <%= link_to chat_user_path(user), class: 'btn' do %>
+                    <span class="username"><%= user.username %></span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %>
           <% end %>
         </div>
       </div>

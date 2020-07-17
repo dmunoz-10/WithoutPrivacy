@@ -28,7 +28,11 @@
         </div>
 
         <div class="form-group mt-2">
-          <%= f.input :description, label: false, placeholder: 'Description', input_html: { title: 'Description' } %>
+          <%= f.input :description,
+                      label: false,
+                      as: :text,
+                      placeholder: 'Description',
+                      input_html: { title: 'Description', rows: 5 } %>
         </div>
 
         <div class="form-group">

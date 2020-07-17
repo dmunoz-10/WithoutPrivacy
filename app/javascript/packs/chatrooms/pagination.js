@@ -7,3 +7,5 @@ const loadMoreMessages = function() {
 };
 
 $('#messages').scroll(loadMoreMessages);
+
+$('#messages').scrollTop($('#messages').height());

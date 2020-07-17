@@ -28,10 +28,10 @@
           </li>
 
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+            <a href="#" role="button" class="nav-link dropdown-toggle" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= current_user.username %>
             </a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" aria-labelledby="dropdownProfile">
               <%= link_to 'Edit profile', edit_user_registration_path, class:'dropdown-item'%>
               <div class="dropdown-divider"></div>
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete,

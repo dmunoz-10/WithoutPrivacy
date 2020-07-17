@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_204037) do
   end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "text"
+    t.text "text", null: false
     t.uuid "user_id", null: false
     t.uuid "chat_room_id", null: false
     t.datetime "seen_at"

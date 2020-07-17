@@ -23,70 +23,74 @@
           </div>
         </div>
         <div class="card-body">
-          <%= markdown @user.description if @user.description.present? %>
+          <% if @user.blocked? current_user %>
+            <p class="text-center">You can't see his/her imformation</p>
+          <% else %>
+            <%= markdown @user.description if @user.description.present? %>
 
-          <div class="row">
-            <div class="col-12">
-              <% if @user.male? %>
-                <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
-              <% elsif @user.female? %>
-                <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
-              <% elsif @user.other? %>
-                <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
-              <% end %>
-            </div>
-            <div class="col-12">
-              <i class="fas fa-birthday-cake"></i> <%= l @user.birth_date, format: :long %>
-            </div>
-            <div class="col-12">
-              <i class="fas fa-envelope"></i> <%= @user.email %>
-            </div>
-            <div class="col-12">
-              <i class="far fa-calendar-alt"></i> Joined <%= l @user.created_at.to_date, format: :long %> 
-            </div>
+            <div class="row">
+              <div class="col-12">
+                <% if @user.male? %>
+                  <i class="fas fa-mars"></i> <%= @user.gender.capitalize %>
+                <% elsif @user.female? %>
+                  <i class="fas fa-venus"></i> <%= @user.gender.capitalize %>
+                <% elsif @user.other? %>
+                  <i class="fas fa-transgender-alt"></i> <%= @user.gender.capitalize %>
+                <% end %>
+              </div>
+              <div class="col-12">
+                <i class="fas fa-birthday-cake"></i> <%= l @user.birth_date, format: :long %>
+              </div>
+              <div class="col-12">
+                <i class="fas fa-envelope"></i> <%= @user.email %>
+              </div>
+              <div class="col-12">
+                <i class="far fa-calendar-alt"></i> Joined <%= l @user.created_at.to_date, format: :long %>
+              </div>
 
-            <div class="col-12 d-flex justify-content-between mt-2 mb-4">
-              <span><%= @user.posts.count %> posts</span>
+              <div class="col-12 d-flex justify-content-between mt-2 mb-4">
+                <span><%= @user.posts.count %> posts</span>
 
-              <% if policy(@user).followers? %>
-                <%= link_to followers_user_path(@user), class: 'follows', remote: :true do %>
+                <% if policy(@user).followers? %>
+                  <%= link_to followers_user_path(@user), class: 'follows', remote: :true do %>
+                    <span><%= pluralize(@user.followers_count, 'followers') %></span>
+                  <% end %>
+                <% else %>
                   <span><%= pluralize(@user.followers_count, 'followers') %></span>
                 <% end %>
-              <% else %>
-                <span><%= pluralize(@user.followers_count, 'followers') %></span>
-              <% end %>
 
-              <% if policy(@user).followings? %>
-                <%= link_to followings_user_path(@user), class: 'follows', remote: :true do %>
+                <% if policy(@user).followings? %>
+                  <%= link_to followings_user_path(@user), class: 'follows', remote: :true do %>
+                    <span><%= @user.following_users_count %> following</span>
+                  <% end %>
+                <% else %>
                   <span><%= @user.following_users_count %> following</span>
                 <% end %>
-              <% else %>
-                <span><%= @user.following_users_count %> following</span>
-              <% end %>
+              </div>
+
+              <div class="col-12 d-flex justify-content-around">
+                <% unless current_user == @user %>
+                  <% if policy(@user).follow? %>
+                    <%= link_to 'Follow', follow_user_path(@user), class: 'btn btn-primary' %>
+                  <% end %>
+
+                  <% if policy(@user).unfollow? %>
+                    <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
+                  <% end %>
+
+                  <% if !@user.blocked?(current_user) && !current_user.blocked?(@user) %>
+                    <%= link_to 'Message', chat_user_path(@user), class: 'btn btn-outline-secondary' %>
+                  <% end %>
+
+                  <% if policy(@user).unblock? %>
+                    <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
+                  <% else %>
+                    <%= link_to 'Block', block_user_path(@user), class: 'btn btn-outline-danger' %>
+                  <% end %>
+                <% end %>
+              </div>
             </div>
-
-            <div class="col-12 d-flex justify-content-around">
-              <% unless current_user == @user %>
-                <% if policy(@user).follow? %>
-                  <%= link_to 'Follow', follow_user_path(@user), class: 'btn btn-primary' %>
-                <% end %>
-
-                <% if policy(@user).unfollow? %>
-                  <%= link_to 'Unfollow', unfollow_user_path(@user), class: 'btn btn-outline-primary' %>
-                <% end %>
-
-                <% if !@user.blocked?(current_user) && !current_user.blocked?(@user) %>
-                  <%= link_to 'Message', chat_user_path(@user), class: 'btn btn-outline-secondary' %>
-                <% end %>
-
-                <% if policy(@user).unblock? %>
-                  <%= link_to 'Unblock', unblock_user_path(@user), class: 'btn btn-danger' %>
-                <% else %>
-                  <%= link_to 'Block', block_user_path(@user), class: 'btn btn-outline-danger' %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>

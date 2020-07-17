@@ -15,8 +15,8 @@ class MessagesController < ApplicationController
              else
                @message.chatroom.user2
              end
-      NotificationManager::Notifier.call current_user, 'talked', @message, user
       BroadcastChatRoomsJob.perform_later current_user, 'creation', @message
+      NotificationManager::Notifier.call current_user, 'talked', @message, user
       head :ok
     end
   end
