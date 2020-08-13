@@ -39,6 +39,8 @@ ActiveAdmin.register Post do
   end
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
+
     f.inputs do
       f.input :user
       f.input :image, as: :file

@@ -9,14 +9,11 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("chartkick")
+require("chart.js")
 
-// import $ from 'jquery';
-// import 'bootstrap/dist/js/bootstrap';
-
-document.addEventListener("turbolinks:load", () => {
-  $('[data-toggle="tooltip"]').tooltip()
-  $('[data-toggle="popover"]').popover()
-})
+import $ from 'jquery';
+import 'bootstrap/dist/js/bootstrap';
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

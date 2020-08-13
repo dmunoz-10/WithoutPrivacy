@@ -25,6 +25,8 @@ ActiveAdmin.register Follow do
   filter :blocked
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
+
     f.inputs do
       f.input :followable_type
       f.input :followable_id

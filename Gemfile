@@ -25,17 +25,19 @@ gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'activeadmin'
+gem 'activeadmin', '~> 2.7'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
-gem 'acts_as_votable'
-gem 'arctic_admin'
-gem 'devise'
+gem 'acts_as_votable', '~> 0.12.1'
+gem 'arctic_admin', '~> 3.2'
+gem 'chartkick', '~> 3.4'
+gem 'devise', '~> 4.7', '>= 4.7.2'
 gem 'friendly_id', '~> 5.3'
+gem 'groupdate', '~> 5.1'
 gem 'health-monitor-rails'
 gem 'pagy', '~> 3.8', '>= 3.8.1'
-gem 'pundit'
+gem 'pundit', '~> 2.1'
 gem 'redcarpet', '~> 3.5'
-gem 'simple_form'
+gem 'simple_form', '~> 5.0', '>= 5.0.2'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
@@ -44,12 +46,12 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
-  gem 'ffaker'
-  gem 'rails-controller-testing'
+  gem 'better_errors', '~> 2.7', '>= 2.7.1'
+  gem 'binding_of_caller', '~> 0.8.0'
+  gem 'byebug', '~> 11.1', '>= 11.1.3' , platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 6.1'
+  gem 'ffaker', '~> 2.16'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
   gem 'rspec-rails', '~> 4.0.0'
   gem 'rubocop', '~> 0.82.0'
   gem 'rubocop-rails'

@@ -37,6 +37,8 @@ ActiveAdmin.register Comment, as: 'PostComment' do
   end
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
+
     f.inputs do
       f.input :user
       f.input :post, collection: Post.all.map { |p| [p.id.to_s] }
