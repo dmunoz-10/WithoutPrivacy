@@ -1,9 +1,413 @@
 <% content_for :title, 'Markdown Rules' %>
 
+<style>
+  ul {
+    list-style-type: none;
+  }
+</style>
+
 <div class="row">
-  <div class="col-10 offset-1">
+  <div class="col-12" id="presentation">
     <h2 class="mt-3 mb-4">Markdown Rules</h2>
 
-    
+    <h4 class="mt-5">Do you want to add some style to your posts, comments or messages?</h4>
+
+    <p class="mt-3">
+      Well, you can do it with <strong>markdown</strong>.
+      <a href="https://www.markdownguide.org/" target="_blank">Here</a> you can know more about markdown,
+      we aren't going to explain you what is markdown, we're going to explain you how to use it to add styles
+      to your posts, comments and messages. So let's go ahead!
+    </p>
+  </div>
+
+  <div class="col-12 my-4">
+    <h2 class="text-center mb-3">Rules</h2>
+
+    <h3>Table of Contents</h3>
+    <ul style="list-style-type: disc">
+      <li><a href="#bold">Bold</a></li>
+      <li><a href="#italic">Italic</a></li>
+      <li><a href="#underline">Underline</a></li>
+      <li><a href="#link">Link</a></li>
+      <li><a href="#strikethrough">Strikethrough</a></li>
+      <li><a href="#superscript">Superscript</a></li>
+      <li><a href="#titles_subtitles">Titles and Subtitles</a></li>
+      <li><a href="#tables">Tables</a></li>
+      <li><a href="#code">Code</a></li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="bold">
+    <h5><strong>Bold</strong></h5>
+
+    <p>Put double asterisks (**) around the word.</p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>**Word**</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '**Word**' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="italic">
+    <h5><strong>Italic</strong></h5>
+
+    <p>Put one asterisks (*) around the word.</p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>*Word*</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '*Word*' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="underline">
+    <h5><strong>Underline</strong></h5>
+
+    <p>
+      Put one underscore (_) around the word. Note: if you put a letter around the underscore, it won't take the style.
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>_Word_</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '_Word_' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>some_Word_some</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown 'some_Word_some' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>some_Word_</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown 'some_Word_' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>_Word_some</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '_Word_some' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="link">
+    <h5><strong>Link</strong></h5>
+
+    <p>
+      Write the link inside parentesis and before the parentesis write the word you want to show to be clicked
+      inside brackets, albeit you can just write the link without anything. Note: write the whole link to be
+      redirected to the page not only "example.com".
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>[Word](https://www.example.com)</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '[Word](https://www.example.com)' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>www.example.com</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown 'www.example.com' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>example.com</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown 'example.com' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="strikethrough">
+    <h5><strong>Strikethrough</strong></h5>
+
+    <p>
+      Write a word inside two tilde (~).
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>~~Word~~</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '~~Word~~' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="superscript">
+    <h5><strong>Superscript</strong></h5>
+
+    <p>
+      Write a caret (^) and whatever you want inside parentesis.
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>2^(4)</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '2^(4)' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>Word^(word)</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown 'Word^(word)' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="titles_subtitles">
+    <h5><strong>Titles and Subtitles</strong></h5>
+
+    <p>
+      Just add a hash (#) and a space and then a word, the more hash you add the lower the word will be.
+      Note: the maximum number of hash is 6, more than that will show all the hash
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li># Title</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '# Title' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>## Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '## Subtitle' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>### Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '### Subtitle' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>#### Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '#### Subtitle' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>##### Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '##### Subtitle' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>###### Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '###### Subtitle' %></li>
+          </ul>
+      </li>
+
+      <li>
+        Write:
+          <ul>
+            <li>####### Subtitle</li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '####### Subtitle' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="tables">
+    <h5><strong>Tables</strong></h5>
+
+    <p>
+      Try to write a table with pipes (|).
+      <a href="https://www.tablesgenerator.com/markdown_tables" target="_blank">Click here</a> if you want
+      to know more about it or just generate the table for you.
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li>
+              <pre style="white-space: pre-wrap">
+                | Tables   |      Are      |  Cool |
+                |----------|:-------------:|------:|
+                | col 1 is |  left-aligned | $1600 |
+                | col 2 is |    centered   |   $12 |
+                | col 3 is | right-aligned |    $1 |
+              </pre>
+            </li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown '| Tables      |      Are      |  Cool |
+|-------------|:-------------:|------:|
+| column 1 is |  left-aligned | $1600 |
+| column 2 is |    centered   |   $12 |
+| column 3 is | right-aligned |    $1 |' %></li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12 my-4" id="code">
+    <h5><strong>Code</strong></h5>
+
+    <p>
+      Write the code inside three tilde (~).
+    </p>
+
+    <h6>Examples</h6>
+    <ul style="list-style-type: disc">
+      <li>
+        Write:
+          <ul>
+            <li style="white-space: pre-wrap">
+              ~~~
+              def hello_world
+                puts 'Hello World!'
+              end
+              ~~~
+            </li>
+          </ul>
+
+        Get:
+          <ul>
+            <li><%= markdown "~~~
+def hello_world
+  puts 'Hello World!'
+end
+~~~" %></li>
+          </ul>
+      </li>
+    </ul>
   </div>
 </div>

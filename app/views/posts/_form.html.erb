@@ -24,6 +24,9 @@
 
         <div class="my-3">
           <%= f.label :description  %>
+          <span style="float: right">
+            <%= link_to '?', markdown_rules_url, target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'left', title: 'Wanna add styles?' %>
+          </span>
           <%= f.text_area :description,
                           class: 'form-control',
                           style: 'height: 200px; resize: none',

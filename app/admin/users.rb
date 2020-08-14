@@ -24,7 +24,7 @@ ActiveAdmin.register User do
   filter :first_name
   filter :last_name
   filter :username
-  filter :gender
+  filter :gender, as: :select, collection: proc { User.genders }
   filter :birth_date
   filter :created_at
   filter :updated_at

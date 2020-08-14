@@ -21,7 +21,7 @@ ActiveAdmin.register Comment, as: 'PostComment' do
   end
 
   filter :user
-  filter :post, collection: Post.all.map { |p| [p.id.to_s] }
+  filter :post
   filter :created_at
   filter :updated_at
 
