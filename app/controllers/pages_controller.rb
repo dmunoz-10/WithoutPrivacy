@@ -40,4 +40,6 @@ class PagesController < ApplicationController
   def terms_service; end
 
   def privacy_policy; end
+
+  def about_us; end
 end

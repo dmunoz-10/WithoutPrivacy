@@ -1,4 +1,8 @@
-<%= link_to like_post_comment_path(comment.post, comment), method: :put, remote: :true,
-            class: "btn mb-1 p-0 #{current_user&.voted_for?(comment) ? 'liked' : 'unliked'}" do %>
+<% if @current_user %>
+  <%= link_to like_post_comment_path(comment.post, comment), method: :put, remote: :true,
+              class: "btn mb-1 p-0 #{current_user&.voted_for?(comment) ? 'liked' : 'unliked'}" do %>
+    <i class="fas fa-heart"></i>
+  <% end %>
+<% else %>
   <i class="fas fa-heart"></i>
 <% end %>

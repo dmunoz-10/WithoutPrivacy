@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'terms_service', to: 'pages#terms_service', as: 'terms_service'
     get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
     get 'markdown_rules', to: 'pages#markdown_rules', as: 'markdown_rules'
+    get 'about_us', to: 'pages#about_us', as: 'about_us'
   end
 
   resources :users, path: '/', only: :show do
