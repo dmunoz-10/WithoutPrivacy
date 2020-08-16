@@ -11,6 +11,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def remove_avatar?
+    current_user.avatar.attached?
+  end
+
   def follow?
     !record.blocked?(user) && !user.blocked?(record) && !user.following?(record)
   end

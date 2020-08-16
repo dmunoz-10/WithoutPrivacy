@@ -3,7 +3,7 @@
 # Users Controller
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user
+  before_action :set_user, except: :remove_avatar
   before_action :mark_seen, only: :show
 
   rescue_from ActiveRecord::RecordNotFound, with: :content_not_found
@@ -15,6 +15,11 @@ class UsersController < ApplicationController
       format.html
       format.js { render 'pages/pagination' }
     end
+  end
+
+  def remove_avatar
+    current_user.avatar.purge_later
+    redirect_to user_url(current_user), notice: 'Avatar removed!'
   end
 
   def follow

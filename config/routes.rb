@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   end
 
   scope '/users' do
+    delete :remove_avatar, to: 'users#remove_avatar'
+
     resources :web_notifications, only: :index do
       put :seen, on: :member
       put :mark_seen_all, on: :collection
