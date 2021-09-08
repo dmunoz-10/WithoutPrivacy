@@ -45,7 +45,7 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  gem 'better_errors', '~> 2.7', '>= 2.7.1'
+  gem 'better_errors', '~> 2.8'
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'byebug', '~> 11.1', '>= 11.1.3' , platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 6.1'
